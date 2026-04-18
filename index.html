@@ -1,0 +1,1054 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Adalat Samadov — Game Designer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@300;400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0a0f;
+    --bg2: #0f0f18;
+    --surface: #13131f;
+    --surface2: #1a1a2e;
+    --border: rgba(255,255,255,0.06);
+    --accent: #c8ff3e;
+    --accent2: #3effc8;
+    --text: #f0f0f5;
+    --muted: #6b6b80;
+    --muted2: #9595a8;
+    --red: #ff4e4e;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 16px;
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  /* NOISE OVERLAY */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 9999;
+    opacity: 0.4;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px 48px;
+    background: rgba(10,10,15,0.85);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .nav-logo {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 15px;
+    letter-spacing: 0.12em;
+    color: var(--accent);
+    text-transform: uppercase;
+    text-decoration: none;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 36px;
+    list-style: none;
+  }
+
+  .nav-links a {
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    letter-spacing: 0.1em;
+    color: var(--muted2);
+    text-decoration: none;
+    text-transform: uppercase;
+    transition: color 0.2s;
+  }
+
+  .nav-links a:hover { color: var(--accent); }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    padding: 120px 48px 80px;
+    gap: 60px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero::after {
+    content: '';
+    position: absolute;
+    top: -200px; right: -200px;
+    width: 700px; height: 700px;
+    background: radial-gradient(circle, rgba(200,255,62,0.06) 0%, transparent 65%);
+    pointer-events: none;
+  }
+
+  .hero-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    color: var(--accent);
+    text-transform: uppercase;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .hero-label::before {
+    content: '';
+    display: inline-block;
+    width: 28px; height: 1px;
+    background: var(--accent);
+  }
+
+  .hero-name {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: clamp(52px, 7vw, 88px);
+    line-height: 0.95;
+    letter-spacing: -0.03em;
+    margin-bottom: 28px;
+  }
+
+  .hero-name span {
+    display: block;
+    color: var(--accent);
+  }
+
+  .hero-bio {
+    font-size: 16px;
+    color: var(--muted2);
+    line-height: 1.7;
+    max-width: 480px;
+    margin-bottom: 36px;
+  }
+
+  .hero-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 40px;
+  }
+
+  .tag {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    padding: 6px 14px;
+    border: 1px solid var(--border);
+    border-radius: 2px;
+    color: var(--muted2);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    transition: all 0.2s;
+  }
+
+  .tag:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+
+  .hero-btns {
+    display: flex;
+    gap: 14px;
+  }
+
+  .btn-primary {
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 14px 28px;
+    background: var(--accent);
+    color: #0a0a0f;
+    border: none;
+    border-radius: 2px;
+    cursor: pointer;
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.2s;
+  }
+
+  .btn-primary:hover {
+    background: #d9ff5a;
+    transform: translateY(-1px);
+  }
+
+  .btn-ghost {
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 14px 28px;
+    background: transparent;
+    color: var(--text);
+    border: 1px solid var(--border);
+    border-radius: 2px;
+    cursor: pointer;
+    text-decoration: none;
+    transition: all 0.2s;
+  }
+
+  .btn-ghost:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+
+  /* PROFILE CARD */
+  .profile-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 36px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .profile-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--accent), var(--accent2));
+  }
+
+  .profile-card-title {
+    font-family: 'Syne', sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 28px;
+  }
+
+  .profile-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding: 14px 0;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .profile-row:last-child { border-bottom: none; }
+
+  .profile-key {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  .profile-val {
+    font-size: 13px;
+    color: var(--text);
+    text-align: right;
+    max-width: 200px;
+  }
+
+  .profile-val.accent { color: var(--accent); }
+
+  /* SECTIONS */
+  section {
+    padding: 100px 48px;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .section-header {
+    display: flex;
+    align-items: baseline;
+    gap: 16px;
+    margin-bottom: 60px;
+  }
+
+  .section-num {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--accent);
+    letter-spacing: 0.15em;
+  }
+
+  .section-title {
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 36px;
+    letter-spacing: -0.02em;
+  }
+
+  /* ABOUT */
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+    align-items: start;
+  }
+
+  .about-text {
+    font-size: 15px;
+    color: var(--muted2);
+    line-height: 1.8;
+  }
+
+  .about-text p + p { margin-top: 16px; }
+
+  .about-text strong { color: var(--text); font-weight: 500; }
+
+  .about-stats {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2px;
+  }
+
+  .stat-box {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    padding: 28px 24px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .stat-box::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0;
+    width: 40px; height: 2px;
+    background: var(--accent);
+  }
+
+  .stat-num {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 40px;
+    color: var(--accent);
+    line-height: 1;
+    margin-bottom: 8px;
+  }
+
+  .stat-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  /* WORK */
+  .work-section { max-width: 1200px; margin: 0 auto; padding: 100px 48px; }
+
+  .job-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    margin-bottom: 24px;
+    overflow: hidden;
+    transition: border-color 0.3s;
+    position: relative;
+  }
+
+  .job-card:hover { border-color: rgba(200,255,62,0.2); }
+
+  .job-card-top {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: start;
+    padding: 36px 36px 0;
+    gap: 20px;
+  }
+
+  .job-type {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--accent2);
+    margin-bottom: 10px;
+  }
+
+  .job-name {
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 28px;
+    letter-spacing: -0.02em;
+    margin-bottom: 6px;
+  }
+
+  .job-meta {
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    color: var(--muted);
+    letter-spacing: 0.06em;
+  }
+
+  .job-badge {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 6px 14px;
+    background: rgba(200,255,62,0.1);
+    color: var(--accent);
+    border: 1px solid rgba(200,255,62,0.25);
+    border-radius: 2px;
+    white-space: nowrap;
+  }
+
+  .job-body {
+    padding: 24px 36px;
+  }
+
+  .job-desc {
+    font-size: 14px;
+    color: var(--muted2);
+    line-height: 1.75;
+    margin-bottom: 10px;
+  }
+
+  .job-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    padding: 20px 36px;
+    border-top: 1px solid var(--border);
+  }
+
+  .job-tag {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 5px 12px;
+    border: 1px solid var(--border);
+    border-radius: 2px;
+    color: var(--muted2);
+  }
+
+  /* PHOTO GRID */
+  .job-photos {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2px;
+    margin-top: 0;
+  }
+
+  .job-photos img {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+    display: block;
+    filter: saturate(0.85) brightness(0.9);
+    transition: filter 0.3s, transform 0.4s;
+  }
+
+  .job-photos img:hover {
+    filter: saturate(1) brightness(1);
+    transform: scale(1.02);
+  }
+
+  /* SKILLS */
+  .skills-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2px;
+  }
+
+  .skill-col {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    padding: 32px 28px;
+  }
+
+  .skill-col-title {
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 13px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 20px;
+    padding-bottom: 14px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .skill-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .skill-list li {
+    font-size: 13px;
+    color: var(--muted2);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .skill-list li::before {
+    content: '';
+    display: inline-block;
+    width: 4px; height: 4px;
+    background: var(--accent);
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  /* EDUCATION */
+  .edu-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 36px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .edu-card::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 3px;
+    background: linear-gradient(180deg, var(--accent), var(--accent2));
+  }
+
+  .edu-degree {
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 20px;
+    margin-bottom: 6px;
+  }
+
+  .edu-school {
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    color: var(--muted);
+    letter-spacing: 0.08em;
+  }
+
+  .edu-field {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--accent2);
+    padding: 8px 18px;
+    border: 1px solid rgba(62,255,200,0.2);
+    border-radius: 2px;
+  }
+
+  /* CONTACT */
+  .contact-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+  }
+
+  .contact-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 28px 32px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    text-decoration: none;
+    transition: all 0.25s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .contact-card::after {
+    content: '→';
+    position: absolute;
+    right: 28px;
+    font-size: 18px;
+    color: var(--muted);
+    transition: all 0.25s;
+  }
+
+  .contact-card:hover {
+    border-color: rgba(200,255,62,0.25);
+    background: var(--surface2);
+    transform: translateX(4px);
+  }
+
+  .contact-card:hover::after {
+    right: 20px;
+    color: var(--accent);
+  }
+
+  .contact-icon {
+    width: 44px; height: 44px;
+    background: rgba(200,255,62,0.08);
+    border: 1px solid rgba(200,255,62,0.15);
+    border-radius: 3px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    font-size: 18px;
+  }
+
+  .contact-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 4px;
+  }
+
+  .contact-value {
+    font-size: 14px;
+    color: var(--text);
+  }
+
+  /* FOOTER */
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 28px 48px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .footer-text {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+    letter-spacing: 0.08em;
+  }
+
+  /* DIVIDER */
+  .divider {
+    width: 100%;
+    height: 1px;
+    background: var(--border);
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  /* SCROLL ANIMATIONS */
+  .reveal {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* CURSOR DOT */
+  .cursor {
+    position: fixed;
+    width: 8px; height: 8px;
+    background: var(--accent);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 10000;
+    transition: transform 0.15s ease;
+    mix-blend-mode: difference;
+  }
+</style>
+</head>
+<body>
+
+<div class="cursor" id="cursor"></div>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">AS / Portfolio</a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#work">Work</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-left">
+    <div class="hero-label">Game Designer · Level Designer</div>
+    <h1 class="hero-name">
+      Adalat
+      <span>Samadov</span>
+    </h1>
+    <p class="hero-bio">
+      I design game spaces, gameplay moments, and clear player flow.
+      My work spans level design, GDD authoring, mechanics setup, and turning raw concepts into polished, playable results.
+    </p>
+    <div class="hero-tags">
+      <span class="tag">Unity</span>
+      <span class="tag">Unreal Engine</span>
+      <span class="tag">Level Design</span>
+      <span class="tag">Gameplay Design</span>
+      <span class="tag">Documentation</span>
+      <span class="tag">Prototyping</span>
+    </div>
+    <div class="hero-btns">
+      <a href="#work" class="btn-primary">See Projects</a>
+      <a href="https://www.linkedin.com/in/adalat-samadov-b418a03a4" target="_blank" class="btn-ghost">LinkedIn</a>
+    </div>
+  </div>
+
+  <div class="profile-card reveal">
+    <div class="profile-card-title">Quick Profile</div>
+    <div class="profile-row">
+      <span class="profile-key">Focus</span>
+      <span class="profile-val">Game Design, Level Design</span>
+    </div>
+    <div class="profile-row">
+      <span class="profile-key">Engines</span>
+      <span class="profile-val">Unity, Unreal Engine</span>
+    </div>
+    <div class="profile-row">
+      <span class="profile-key">Education</span>
+      <span class="profile-val">BSc Computer Science</span>
+    </div>
+    <div class="profile-row">
+      <span class="profile-key">Languages</span>
+      <span class="profile-val">EN · RU · AZ · TR</span>
+    </div>
+    <div class="profile-row">
+      <span class="profile-key">Location</span>
+      <span class="profile-val accent">Debrecen, Hungary</span>
+    </div>
+    <div class="profile-row">
+      <span class="profile-key">Availability</span>
+      <span class="profile-val accent">Open to work</span>
+    </div>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<div class="divider"></div>
+<section id="about">
+  <div class="section-header">
+    <span class="section-num">01</span>
+    <h2 class="section-title">About Me</h2>
+  </div>
+  <div class="about-grid">
+    <div class="about-text reveal">
+      <p>
+        I am a game designer with hands-on experience across <strong>AAA and mobile game production</strong>, working in Unity and Unreal Engine on everything from large open-world areas to tight hyper-casual loops.
+      </p>
+      <p>
+        My approach centers on <strong>player-first thinking</strong> — every map, encounter, and system I design is evaluated through the lens of how it makes the player feel. Tension, pacing, atmosphere, and flow are not afterthoughts; they are the design.
+      </p>
+      <p>
+        I work fluently across <strong>level design, GDD authoring, engine integration, and cross-team collaboration</strong> — comfortable preparing task breakdowns for programmers and artists, and driving iteration from first blockout to final polish.
+      </p>
+    </div>
+    <div class="about-stats reveal">
+      <div class="stat-box">
+        <div class="stat-num">3+</div>
+        <div class="stat-label">Years of Experience</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-num">3</div>
+        <div class="stat-label">Studios Worked At</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-num">AAA</div>
+        <div class="stat-label">+ Mobile Experience</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-num">4</div>
+        <div class="stat-label">Languages Spoken</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WORK -->
+<div class="divider"></div>
+<div class="work-section" id="work">
+  <div class="section-header">
+    <span class="section-num">02</span>
+    <h2 class="section-title">Selected Work</h2>
+  </div>
+
+  <!-- ALICTUS -->
+  <div class="job-card reveal">
+    <div class="job-card-top">
+      <div>
+        <div class="job-type">Mobile Game Development</div>
+        <div class="job-name">Alictus</div>
+        <div class="job-meta">Game Designer &nbsp;·&nbsp; 02/2025 – 11/2025</div>
+      </div>
+    </div>
+    <div class="job-body">
+      <p class="job-desc">
+        Joined Alictus as a Game Designer focused on hyper-casual mobile game development — a fast-paced environment requiring high-volume concept output and rapid design validation. Ideated, scoped, and prototyped new gameplay concepts in Unity, moving from rough mechanic ideas to testable builds within tight iteration cycles.
+      </p>
+      <p class="job-desc">
+        Designed and balanced level progressions with a strong emphasis on player retention — analysing early-session drop-off points, adjusting difficulty curves, and tuning reward timing to improve engagement metrics. Applied data-informed design thinking to refine core loops and reduce friction at critical onboarding stages.
+      </p>
+      <p class="job-desc">
+        Contributed to improving overall gameplay clarity and mechanic legibility, ensuring new players could understand and engage with core systems intuitively without onboarding text. Worked collaboratively within a structured pipeline to bring multiple concurrent concepts from prototype to a publishable state.
+      </p>
+    </div>
+    <div class="job-tags">
+      <span class="job-tag">Hyper-Casual Design</span>
+      <span class="job-tag">Gameplay Concepting</span>
+      <span class="job-tag">Unity Prototyping</span>
+      <span class="job-tag">Rapid Iteration</span>
+      <span class="job-tag">Retention Design</span>
+      <span class="job-tag">Difficulty Balancing</span>
+      <span class="job-tag">Core Loop Design</span>
+    </div>
+    <div class="job-photos">
+      <img src="c1.jpg" alt="Alictus screenshot 1">
+      <img src="c2.jpg" alt="Alictus screenshot 2">
+      <img src="c3.jpg" alt="Alictus screenshot 3">
+    </div>
+  </div>
+
+  <!-- MUNDFISH -->
+  <div class="job-card reveal">
+    <div class="job-card-top">
+      <div>
+        <div class="job-type">AAA Game Development · Remote</div>
+        <div class="job-name">Mundfish</div>
+        <div class="job-meta">Mid Game Designer &nbsp;·&nbsp; 01/2023 – 11/2025</div>
+      </div>
+      <div class="job-badge">Featured</div>
+    </div>
+    <div class="job-body">
+      <p class="job-desc">
+        Worked as a Mid Game Designer at Mundfish on <em>Atomic Heart</em> — a first-person action RPG built in Unreal Engine, released across PC, PS5, and Xbox Series X|S with backing from Tencent and Epic Games. Operated fully remote as part of a distributed international team across multiple time zones.
+      </p>
+      <p class="job-desc">
+        Owned the design and iterative refinement of in-game maps and combat spaces — defining zone layouts, traversal paths, encounter pacing, and spatial storytelling. Ensured each area delivered clear player flow, appropriate tension curves, and a consistent gameplay language aligned with the overall creative direction.
+      </p>
+      <p class="job-desc">
+        Authored and maintained comprehensive Game Design Documentation (GDD) covering level intent, interaction specifications, enemy placement rationale, trigger conditions, and implementation notes for engine integration. These documents served as the primary handoff material for programmers and environmental artists throughout production sprints.
+      </p>
+      <p class="job-desc">
+        Participated in regular design reviews and cross-discipline sync sessions, produced structured task breakdowns for engineering and art handoffs, and iterated continuously on designs based on internal playtesting feedback. Contributed across both the main game production cycle and post-launch DLC content development.
+      </p>
+    </div>
+    <div class="job-tags">
+      <span class="job-tag">Map Design</span>
+      <span class="job-tag">GDD Authoring</span>
+      <span class="job-tag">Unreal Engine</span>
+      <span class="job-tag">Encounter Design</span>
+      <span class="job-tag">Player Flow</span>
+      <span class="job-tag">Remote Collaboration</span>
+      <span class="job-tag">DLC Production</span>
+      <span class="job-tag">Spatial Design</span>
+      <span class="job-tag">Cross-discipline Handoff</span>
+    </div>
+    <div class="job-photos">
+      <img src="b1.jpg" alt="Atomic Heart screenshot 1">
+      <img src="b2.jpg" alt="Atomic Heart screenshot 2">
+      <img src="b3.jpg" alt="Atomic Heart screenshot 3">
+    </div>
+  </div>
+
+  <!-- WICKED GAMES AG -->
+  <div class="job-card reveal">
+    <div class="job-card-top">
+      <div>
+        <div class="job-type">Game Project</div>
+        <div class="job-name">Wicked Games AG</div>
+        <div class="job-meta">Game Designer &nbsp;·&nbsp; 05/2023 – 04/2024</div>
+      </div>
+    </div>
+    <div class="job-body">
+      <p class="job-desc">
+        Worked as a Level Designer contributing to the creation and shaping of game maps from initial blockout through final polish. Designed playable spaces based on structured documentation, maintaining clear player flow, logical progression, and consistent gameplay logic across all assigned levels.
+      </p>
+      <p class="job-desc">
+        Produced and maintained detailed design documentation on a daily basis — specifying level behavior, mechanics definitions, object placement logic, and implementation guidelines. Documentation was used directly by programmers and artists as the authoritative reference for integrating gameplay elements into the engine.
+      </p>
+      <p class="job-desc">
+        Collaborated closely with engineers and the art team by preparing clear, actionable task breakdowns and supporting smooth asset and feature integration within the engine. Contributed to multiple passes of level refinement — improving spatial readability, resolving gameplay inconsistencies, and raising the overall design quality bar throughout the project lifecycle.
+      </p>
+    </div>
+    <div class="job-tags">
+      <span class="job-tag">Player Flow</span>
+      <span class="job-tag">Mechanics Setup</span>
+      <span class="job-tag">Engine Work</span>
+      <span class="job-tag">Polish Pass</span>
+      <span class="job-tag">Level Blockout</span>
+      <span class="job-tag">Design Documentation</span>
+      <span class="job-tag">Task Breakdown</span>
+    </div>
+    <div class="job-photos">
+      <img src="a1.jpg" alt="Wicked Games AG screenshot 1">
+      <img src="a2.jpg" alt="Wicked Games AG screenshot 2">
+      <img src="a3.jpg" alt="Wicked Games AG screenshot 3">
+    </div>
+  </div>
+</div>
+
+<!-- SKILLS -->
+<div class="divider"></div>
+<section id="skills">
+  <div class="section-header">
+    <span class="section-num">03</span>
+    <h2 class="section-title">Skills</h2>
+  </div>
+  <div class="skills-grid reveal">
+    <div class="skill-col">
+      <div class="skill-col-title">Design</div>
+      <ul class="skill-list">
+        <li>Level Design</li>
+        <li>Gameplay Design</li>
+        <li>Map Creation</li>
+        <li>Player Flow</li>
+        <li>Encounter Design</li>
+        <li>Spatial Composition</li>
+      </ul>
+    </div>
+    <div class="skill-col">
+      <div class="skill-col-title">Production</div>
+      <ul class="skill-list">
+        <li>Game Design Documentation</li>
+        <li>Task Preparation</li>
+        <li>Team Coordination</li>
+        <li>Iteration Workflow</li>
+        <li>Playtesting & Feedback</li>
+        <li>Cross-discipline Handoff</li>
+      </ul>
+    </div>
+    <div class="skill-col">
+      <div class="skill-col-title">Tools</div>
+      <ul class="skill-list">
+        <li>Unity Engine</li>
+        <li>Unreal Engine</li>
+        <li>C#</li>
+        <li>C++</li>
+        <li>Blueprints (UE)</li>
+        <li>Jira / Confluence</li>
+      </ul>
+    </div>
+    <div class="skill-col">
+      <div class="skill-col-title">Languages</div>
+      <ul class="skill-list">
+        <li>English</li>
+        <li>Russian</li>
+        <li>Azerbaijani</li>
+        <li>Turkish</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- EDUCATION -->
+<div class="divider"></div>
+<section id="education">
+  <div class="section-header">
+    <span class="section-num">04</span>
+    <h2 class="section-title">Education</h2>
+  </div>
+  <div class="edu-card reveal">
+    <div>
+      <div class="edu-degree">Bachelor of Science in Computer Science</div>
+      <div class="edu-school">University of Debrecen &nbsp;·&nbsp; Debrecen, Hungary</div>
+    </div>
+    <div class="edu-field">BSc · CompSci</div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<div class="divider"></div>
+<section id="contact">
+  <div class="section-header">
+    <span class="section-num">05</span>
+    <h2 class="section-title">Contact</h2>
+  </div>
+  <div class="contact-grid reveal">
+    <a href="mailto:epik11666@gmail.com" class="contact-card">
+      <div class="contact-icon">✉</div>
+      <div>
+        <div class="contact-label">Email</div>
+        <div class="contact-value">epik11666@gmail.com</div>
+      </div>
+    </a>
+    <a href="tel:+994050501793" class="contact-card">
+      <div class="contact-icon">☎</div>
+      <div>
+        <div class="contact-label">Phone</div>
+        <div class="contact-value">+994 050 501 79 31</div>
+      </div>
+    </a>
+    <a href="https://www.linkedin.com/in/adalat-samadov-b418a03a4" target="_blank" class="contact-card">
+      <div class="contact-icon">in</div>
+      <div>
+        <div class="contact-label">LinkedIn</div>
+        <div class="contact-value">adalat-samadov-b418a03a4</div>
+      </div>
+    </a>
+    <div class="contact-card" style="cursor:default;">
+      <div class="contact-icon">📍</div>
+      <div>
+        <div class="contact-label">Location</div>
+        <div class="contact-value">Debrecen, Hungary</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <span class="footer-text">© 2025 Adalat Samadov</span>
+  <span class="footer-text">Game Designer · Level Designer</span>
+</footer>
+
+<script>
+  // Cursor
+  const cursor = document.getElementById('cursor');
+  document.addEventListener('mousemove', e => {
+    cursor.style.left = e.clientX - 4 + 'px';
+    cursor.style.top = e.clientY - 4 + 'px';
+  });
+
+  // Scroll reveal
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => entry.target.classList.add('visible'), i * 80);
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1 });
+  reveals.forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
