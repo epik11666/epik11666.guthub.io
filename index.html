@@ -100,7 +100,10 @@ main { padding: 84px 24px 60px; }
   border: 1px solid #C9C5B9;
   box-shadow: 0 2px 0 rgba(28,28,32,0.06), 0 18px 40px rgba(28,28,32,0.13);
   padding: 64px 72px 56px;
+  overflow: hidden;
 }
+.sheet table { table-layout: auto; max-width: 100%; }
+.sheet td { overflow-wrap: anywhere; }
 /* punched binder holes */
 .sheet::before {
   content: '';
@@ -317,18 +320,22 @@ main { padding: 84px 24px 60px; }
 
 .kw {
   margin-top: 18px;
+  display: flex; flex-wrap: wrap; align-items: center;
+  gap: 8px;
+  max-width: 100%;
   font-family: 'IBM Plex Mono', monospace;
-  font-size: 11px; line-height: 2.1;
+  font-size: 11px; line-height: 1.6;
   color: var(--ink2);
 }
 .kw b {
+  flex-basis: 100%;
   font-weight: 600; font-size: 9.5px; letter-spacing: 0.18em; text-transform: uppercase;
-  color: var(--faint); margin-right: 6px;
+  color: var(--faint);
 }
 .kw span {
   border: 1px solid var(--line);
   background: #fff;
-  padding: 3px 9px; margin-right: 6px;
+  padding: 3px 10px;
   white-space: nowrap;
   transition: border-color 0.15s, color 0.15s;
 }
