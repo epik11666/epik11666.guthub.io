@@ -3,778 +3,708 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Adalat Samadov — Game & Level Designer</title>
+<title>Adalat Samadov — Game &amp; Level Designer</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,300;0,400;0,500;0,600;0,800;1,400&family=IBM+Plex+Mono:wght@400;500;600&family=Caveat:wght@500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=Newsreader:ital,opsz,wght@0,6..72,300..600;1,6..72,400..500&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
 <style>
 /* ============================================================
-   THE DESIGN DOCUMENT
-   A portfolio formatted as the artifact a level designer
-   actually produces: a GDD. Paper sheets, a table of contents,
-   a revision history, numbered sections, figure plates,
-   approval stamps, and red-pen notes in the margins.
+   THE TUNING TABLE
+   A game/level designer's portfolio. The connective device is
+   a progression curve — the thing a systems designer tunes —
+   which draws across the hero and then becomes the vertical
+   timeline linking each studio. Cool drafting vellum for the
+   reading; one cobalt accent; Bricolage over Newsreader.
    ============================================================ */
-* { box-sizing: border-box; margin: 0; padding: 0; }
-html { scroll-behavior: smooth; }
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
 
-:root {
-  --desk: #DCD9D2;        /* the desk under the paper */
-  --paper: #FCFBF7;       /* the sheet */
-  --ink: #1C1C20;         /* typed ink */
-  --ink2: #51514F;        /* body text */
-  --faint: #8E8C85;       /* metadata */
-  --line: #D8D4C8;        /* table rules */
-  --blue: #2244B8;        /* blueprint ink */
-  --red: #D5332A;         /* the reviewer's pen */
-  --stamp: #C2271E;
-}
-
-::selection { background: var(--blue); color: #fff; }
-
-body {
-  background: var(--desk);
-  background-image: radial-gradient(rgba(28,28,32,0.06) 1px, transparent 1px);
-  background-size: 22px 22px;
-  color: var(--ink);
-  font-family: 'Spectral', Georgia, serif;
-  font-size: 16px;
-  line-height: 1.75;
+:root{
+  --ink:#131611;            /* deep hero ink */
+  --ink-2:#1c211a;          /* raised dark surface */
+  --paper:#E6E8E1;          /* cool drafting vellum */
+  --paper-hi:#F1F2EC;       /* lifted panel */
+  --text:#181B15;           /* body ink on paper */
+  --soft:#575A4F;           /* secondary text */
+  --faint:#8B8D81;          /* metadata */
+  --hair:#CBCDC1;           /* hairline on paper */
+  --hair-dk:rgba(233,236,224,.14);/* hairline on ink */
+  --cobalt:#1E3AD6;         /* accent on paper */
+  --cobalt-hi:#4B67FF;      /* accent on ink */
+  --onink:#E7EADF;          /* text on ink */
+  --onink-soft:#9DA093;     /* secondary on ink */
 }
 
-.mono { font-family: 'IBM Plex Mono', monospace; }
-.pen  { font-family: 'Caveat', cursive; color: var(--red); }
+::selection{background:var(--cobalt);color:#fff}
 
-a { color: var(--blue); }
-
-/* ── DOCUMENT HEADER BAR ──────────────────────────────────── */
-.docbar {
-  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-  height: 44px;
-  background: var(--ink); color: #CFCDC6;
-  display: flex; align-items: center; justify-content: space-between;
-  padding: 0 28px;
-  font-family: 'IBM Plex Mono', monospace;
-  font-size: 10.5px; letter-spacing: 0.12em; text-transform: uppercase;
-}
-.docbar .strike { text-decoration: line-through; text-decoration-color: var(--red); text-decoration-thickness: 2px; opacity: 0.7; }
-.docbar .pen { font-size: 17px; letter-spacing: 0; text-transform: none; color: #FF6B61; margin-left: 8px; }
-.docbar a { color: #CFCDC6; text-decoration: none; }
-.docbar a:hover { color: #fff; }
-
-/* ── TABLE OF CONTENTS (fixed, wide screens) ──────────────── */
-.toc {
-  position: fixed; top: 110px; left: 32px; z-index: 50;
-  width: 220px;
-}
-.toc-title {
-  font-family: 'IBM Plex Mono', monospace;
-  font-size: 10px; font-weight: 600; letter-spacing: 0.22em; text-transform: uppercase;
-  color: var(--ink2);
-  border-bottom: 2px solid var(--ink);
-  padding-bottom: 8px; margin-bottom: 12px;
-}
-.toc a {
-  display: flex; align-items: baseline; gap: 6px;
-  font-family: 'IBM Plex Mono', monospace;
-  font-size: 11.5px; color: var(--ink2);
-  text-decoration: none;
-  padding: 6px 0;
-  transition: color 0.15s;
-}
-.toc a .dots {
-  flex: 1; border-bottom: 1px dotted var(--faint);
-  transform: translateY(-3px); min-width: 12px;
-}
-.toc a .pg { color: var(--faint); }
-.toc a:hover, .toc a.now { color: var(--red); }
-.toc a.now .pg { color: var(--red); }
-
-/* ── SHEETS ───────────────────────────────────────────────── */
-main { padding: 84px 24px 60px; }
-.sheet {
-  position: relative;
-  max-width: 880px;
-  margin: 0 auto 36px;
-  background: var(--paper);
-  border: 1px solid #C9C5B9;
-  box-shadow: 0 2px 0 rgba(28,28,32,0.06), 0 18px 40px rgba(28,28,32,0.13);
-  padding: 64px 72px 56px;
-  overflow: hidden;
-}
-.sheet table { table-layout: auto; max-width: 100%; }
-.sheet td { overflow-wrap: anywhere; }
-/* punched binder holes */
-.sheet::before {
-  content: '';
-  position: absolute; top: 0; bottom: 0; left: 26px;
-  width: 14px;
-  background-image: radial-gradient(circle 7px, var(--desk) 6px, rgba(28,28,32,0.12) 6.5px, transparent 8px);
-  background-size: 14px 200px;
-  background-position: center 60px;
-  background-repeat: repeat-y;
-  pointer-events: none;
-}
-.sheet-foot {
-  display: flex; justify-content: space-between;
-  margin-top: 48px; padding-top: 14px;
-  border-top: 1px solid var(--line);
-  font-family: 'IBM Plex Mono', monospace;
-  font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase;
-  color: var(--faint);
+body{
+  background:var(--paper);
+  color:var(--text);
+  font-family:'Newsreader',Georgia,serif;
+  font-optical-sizing:auto;
+  font-size:18px;line-height:1.72;
+  -webkit-font-smoothing:antialiased;
 }
 
-/* ── COVER SHEET ──────────────────────────────────────────── */
-.cover { text-align: center; padding-top: 84px; }
-.cover-frame {
-  border: 2px solid var(--ink);
-  outline: 1px solid var(--ink);
-  outline-offset: 5px;
-  padding: 60px 40px 52px;
-  position: relative;
-}
-.cover-eyebrow {
-  font-family: 'IBM Plex Mono', monospace;
-  font-size: 11px; font-weight: 600; letter-spacing: 0.34em; text-transform: uppercase;
-  color: var(--blue);
-  margin-bottom: 28px;
-}
-.cover h1 {
-  font-weight: 800;
-  font-size: clamp(52px, 7.5vw, 86px);
-  line-height: 1.02;
-  letter-spacing: -0.01em;
-  margin-bottom: 16px;
-}
-.cover-roles {
-  font-style: italic; font-size: 20px; color: var(--ink2);
-  margin-bottom: 40px;
-}
-.cover-roles b { font-style: normal; font-weight: 600; color: var(--ink); }
+h1,h2,h3,h4,.disp{font-family:'Bricolage Grotesque',system-ui,sans-serif;font-optical-sizing:auto}
+.mono{font-family:'Space Mono',ui-monospace,monospace}
+a{color:var(--cobalt);text-decoration:none}
 
-.cover-meta {
-  width: 100%; max-width: 520px; margin: 0 auto;
-  border-collapse: collapse;
-  font-size: 13.5px;
-}
-.cover-meta td {
-  border: 1px solid var(--line);
-  padding: 9px 16px;
-  text-align: left;
-}
-.cover-meta td:first-child {
-  font-family: 'IBM Plex Mono', monospace;
-  font-size: 10px; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase;
-  color: var(--faint);
-  width: 38%;
-  background: rgba(34,68,184,0.035);
-}
-.cover-meta td b { font-weight: 600; }
-
-/* the stamp */
-.stamp {
-  position: absolute; right: -18px; top: -26px;
-  transform: rotate(8deg);
-  font-family: 'IBM Plex Mono', monospace;
-  font-weight: 600; font-size: 15px; letter-spacing: 0.22em; text-transform: uppercase;
-  color: var(--stamp);
-  border: 3px double var(--stamp);
-  border-radius: 6px;
-  padding: 10px 18px;
-  background: rgba(252,251,247,0.85);
-  box-shadow: 0 0 0 1px rgba(194,39,30,0.15);
-  -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='60'%3E%3Cfilter id='n'%3E%3CfeTurbulence baseFrequency='0.7'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.85 0.15'/%3E%3C/filter%3E%3Crect width='120' height='60' filter='url(%23n)'/%3E%3C/svg%3E");
-  mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='60'%3E%3Cfilter id='n'%3E%3CfeTurbulence baseFrequency='0.7'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.85 0.15'/%3E%3C/filter%3E%3Crect width='120' height='60' filter='url(%23n)'/%3E%3C/svg%3E");
+/* micro label */
+.eyebrow{
+  font-family:'Space Mono',monospace;
+  font-size:11px;font-weight:700;letter-spacing:.24em;text-transform:uppercase;
+  color:var(--faint);
 }
 
-.cover-actions { margin-top: 44px; display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
-.btn {
-  font-family: 'IBM Plex Mono', monospace;
-  font-size: 11.5px; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase;
-  text-decoration: none;
-  padding: 14px 28px;
-  transition: background 0.2s, color 0.2s;
-}
-.btn-ink { background: var(--ink); color: var(--paper); }
-.btn-ink:hover { background: var(--blue); color: #fff; }
-.btn-ghost { color: var(--ink); border: 1.5px solid var(--ink); }
-.btn-ghost:hover { border-color: var(--red); color: var(--red); }
+/* ── SCROLL PROGRESS (the tuning slider) ─────────────────── */
+.slider{position:fixed;top:0;left:0;height:2px;width:100%;z-index:120;background:transparent}
+.slider i{display:block;height:100%;width:100%;background:var(--cobalt-hi);transform:scaleX(0);transform-origin:0 50%}
 
-/* revision history = the career, in one table */
-.rev-title {
-  font-family: 'IBM Plex Mono', monospace;
-  font-size: 10px; font-weight: 600; letter-spacing: 0.22em; text-transform: uppercase;
-  color: var(--ink2);
-  margin: 52px 0 12px; text-align: left;
+/* ── TOP BAR ─────────────────────────────────────────────── */
+.bar{
+  position:fixed;top:0;left:0;right:0;z-index:110;height:60px;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 clamp(18px,4vw,44px);
+  color:var(--onink);
+  transition:background .35s ease,color .35s ease,border-color .35s ease;
+  border-bottom:1px solid transparent;
 }
-.rev {
-  width: 100%; border-collapse: collapse;
-  font-size: 13px; text-align: left;
+.bar.solid{background:var(--paper);color:var(--text);border-bottom-color:var(--hair)}
+.bar .id{font-family:'Space Mono',monospace;font-size:12px;letter-spacing:.16em;text-transform:uppercase;font-weight:700}
+.bar nav{display:flex;gap:26px}
+.bar nav a{
+  font-family:'Space Mono',monospace;font-size:11px;letter-spacing:.16em;text-transform:uppercase;
+  color:inherit;opacity:.62;transition:opacity .2s;position:relative;padding:4px 0;
 }
-.rev th {
-  font-family: 'IBM Plex Mono', monospace;
-  font-size: 9.5px; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase;
-  color: var(--faint);
-  border-bottom: 2px solid var(--ink);
-  padding: 8px 12px;
-}
-.rev td { border-bottom: 1px solid var(--line); padding: 10px 12px; vertical-align: top; }
-.rev td:first-child { font-family: 'IBM Plex Mono', monospace; font-size: 11.5px; color: var(--blue); white-space: nowrap; }
-.rev tr:last-child td { font-weight: 600; }
-.rev a { text-decoration: none; color: var(--ink); border-bottom: 1px dotted var(--blue); }
-.rev a:hover { color: var(--blue); }
+.bar nav a:hover,.bar nav a.now{opacity:1}
+.bar nav a.now::after{content:'';position:absolute;left:0;right:0;bottom:-2px;height:2px;background:var(--cobalt-hi)}
+.bar.solid nav a.now::after{background:var(--cobalt)}
+@media(max-width:720px){.bar nav a:not(.cta){display:none}}
 
-/* ── SECTION SHEETS ───────────────────────────────────────── */
-.sec-head { margin-bottom: 34px; }
-.sec-no {
-  font-family: 'IBM Plex Mono', monospace;
-  font-size: 12px; font-weight: 600; letter-spacing: 0.2em;
-  color: var(--blue);
-  display: block; margin-bottom: 6px;
+/* ── HERO ────────────────────────────────────────────────── */
+.hero{
+  position:relative;background:var(--ink);color:var(--onink);
+  min-height:100svh;overflow:hidden;
+  display:flex;flex-direction:column;justify-content:flex-end;
+  padding:120px clamp(18px,4vw,44px) 0;
 }
-.sec-title {
-  font-weight: 800; font-size: clamp(34px, 4.5vw, 46px); line-height: 1.05;
-  padding-bottom: 16px;
-  border-bottom: 2px solid var(--ink);
-  position: relative;
+/* faint editor grid */
+.hero::before{
+  content:'';position:absolute;inset:0;pointer-events:none;
+  background-image:
+    linear-gradient(var(--hair-dk) 1px,transparent 1px),
+    linear-gradient(90deg,var(--hair-dk) 1px,transparent 1px);
+  background-size:64px 64px;
+  -webkit-mask-image:radial-gradient(120% 90% at 78% 8%,#000 0%,transparent 70%);
+  mask-image:radial-gradient(120% 90% at 78% 8%,#000 0%,transparent 70%);
+  opacity:.7;
 }
-.sec-title::after {
-  content: ''; position: absolute; bottom: -7px; left: 0;
-  width: 64px; height: 2px; background: var(--red);
+.hero-inner{position:relative;z-index:2;max-width:1180px;margin:0 auto;width:100%;padding-bottom:56px}
+.hero .eyebrow{color:var(--cobalt-hi)}
+.hero-role{margin-top:20px;display:flex;gap:14px;align-items:center;flex-wrap:wrap}
+.hero-role span{
+  font-family:'Space Mono',monospace;font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:var(--onink-soft);
 }
+.hero-role b{color:var(--onink);font-weight:700}
+.hero h1{
+  font-weight:800;letter-spacing:-.03em;line-height:.9;
+  font-size:clamp(58px,13vw,168px);
+  margin:10px 0 0;
+}
+.hero h1 .l2{color:var(--onink);opacity:.28;-webkit-text-stroke:1px var(--onink);color:transparent}
+.hero-sub{
+  font-family:'Newsreader',serif;font-style:italic;font-weight:400;
+  font-size:clamp(18px,2.3vw,26px);color:var(--onink-soft);
+  max-width:44ch;margin-top:26px;line-height:1.4;
+}
+.hero-actions{margin-top:34px;display:flex;gap:12px;flex-wrap:wrap}
+.btn{
+  font-family:'Space Mono',monospace;font-size:12px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;
+  padding:15px 26px;border:1px solid var(--cobalt-hi);transition:background .2s,color .2s,transform .2s;
+}
+.btn-fill{background:var(--cobalt-hi);color:#fff;border-color:var(--cobalt-hi)}
+.btn-fill:hover{background:transparent;color:var(--cobalt-hi)}
+.btn-line{color:var(--onink);border-color:var(--hair-dk)}
+.btn-line:hover{border-color:var(--onink);transform:translateY(-2px)}
 
-.body-copy { color: var(--ink2); }
-.body-copy p + p { margin-top: 16px; }
-.body-copy strong { color: var(--ink); font-weight: 600; }
+/* the curve band */
+.curve{position:relative;z-index:2;height:clamp(150px,22vh,230px);width:100%}
+.curve svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
+.curve .grid-line{stroke:var(--hair-dk);stroke-width:1}
+.curve .axis-lab{font-family:'Space Mono',monospace;font-size:10px;letter-spacing:.14em;fill:var(--onink-soft);text-transform:uppercase}
+.curve .plot{fill:none;stroke:var(--cobalt-hi);stroke-width:2.5;stroke-linecap:round;
+  stroke-dasharray:var(--len);stroke-dashoffset:var(--len);
+  animation:draw 1.9s .35s cubic-bezier(.7,0,.2,1) forwards}
+.curve .node{fill:var(--ink);stroke:var(--cobalt-hi);stroke-width:2.5;opacity:0;animation:pop .4s forwards}
+.curve .fillband{fill:url(#cg);opacity:0;animation:fade 1.4s 1.1s forwards}
+@keyframes draw{to{stroke-dashoffset:0}}
+@keyframes pop{to{opacity:1}}
+@keyframes fade{to{opacity:.16}}
 
-/* red pen marginalia */
-.note {
-  font-family: 'Caveat', cursive;
-  font-size: 21px; line-height: 1.25;
-  color: var(--red);
-  transform: rotate(-2deg);
+/* meta ledger under curve */
+.ledger{
+  position:relative;z-index:2;border-top:1px solid var(--hair-dk);
+  display:grid;grid-template-columns:repeat(4,1fr);
 }
-.note .arrow { font-family: inherit; }
-.margin-note {
-  float: right; width: 168px;
-  margin: 6px -36px 12px 26px;
-  padding-left: 12px;
-  border-left: 2px solid rgba(213,51,42,0.4);
-}
-.circled {
-  border: 2px solid var(--red);
-  border-radius: 50% 45% 55% 48% / 60% 50% 60% 45%;
-  padding: 0 8px;
-  white-space: nowrap;
-}
-
-/* facts strip on the overview sheet */
-.facts {
-  margin-top: 36px;
-  display: grid; grid-template-columns: repeat(4, 1fr);
-  border: 1.5px solid var(--ink);
-}
-.fact { padding: 18px 18px 14px; }
-.fact + .fact { border-left: 1px solid var(--line); }
-.fact-n { font-weight: 800; font-size: 38px; line-height: 1; }
-.fact-n em { font-style: normal; color: var(--red); }
-.fact-l {
-  font-family: 'IBM Plex Mono', monospace;
-  font-size: 9px; font-weight: 500; letter-spacing: 0.16em; text-transform: uppercase;
-  color: var(--faint); margin-top: 6px;
-}
-
-/* ── WORK ENTRIES ─────────────────────────────────────────── */
-.entry { margin-bottom: 56px; }
-.entry:last-of-type { margin-bottom: 0; }
-.entry-head { display: flex; align-items: baseline; gap: 16px; flex-wrap: wrap; margin-bottom: 6px; }
-.entry-no {
-  font-family: 'IBM Plex Mono', monospace;
-  font-size: 13px; font-weight: 600; color: var(--blue);
-}
-.entry h3 { font-weight: 800; font-size: 32px; line-height: 1.1; }
-.entry-flag {
-  font-family: 'Caveat', cursive;
-  font-size: 20px; color: var(--red);
-  transform: rotate(-3deg);
-  margin-left: auto;
-}
-.entry-spec {
-  width: 100%; border-collapse: collapse;
-  margin: 12px 0 20px;
-  font-size: 13px;
-}
-.entry-spec td {
-  border: 1px solid var(--line);
-  padding: 7px 14px;
-}
-.entry-spec td:nth-child(odd) {
-  font-family: 'IBM Plex Mono', monospace;
-  font-size: 9.5px; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase;
-  color: var(--faint);
-  background: rgba(34,68,184,0.035);
-  white-space: nowrap;
-}
-.entry .body-copy { font-size: 15px; }
-.entry .body-copy em { font-style: italic; font-weight: 600; color: var(--ink); }
-
-.kw {
-  margin-top: 18px;
-  display: flex; flex-wrap: wrap; align-items: center;
-  gap: 8px;
-  max-width: 100%;
-  font-family: 'IBM Plex Mono', monospace;
-  font-size: 11px; line-height: 1.6;
-  color: var(--ink2);
-}
-.kw b {
-  flex-basis: 100%;
-  font-weight: 600; font-size: 9.5px; letter-spacing: 0.18em; text-transform: uppercase;
-  color: var(--faint);
-}
-.kw span {
-  border: 1px solid var(--line);
-  background: #fff;
-  padding: 3px 10px;
-  white-space: nowrap;
-  transition: border-color 0.15s, color 0.15s;
-}
-.kw span:hover { border-color: var(--blue); color: var(--blue); }
-
-/* figure plates */
-.plates { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 22px; }
-.plates figure {
-  border: 1px solid var(--ink);
-  padding: 7px 7px 5px;
-  background: #fff;
-  transition: transform 0.2s, box-shadow 0.2s;
-}
-.plates figure:hover { transform: translateY(-4px) rotate(-0.4deg); box-shadow: 0 10px 22px rgba(28,28,32,0.18); }
-.plates img { width: 100%; height: 150px; object-fit: cover; display: block; }
-.plates figcaption {
-  font-family: 'IBM Plex Mono', monospace;
-  font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase;
-  color: var(--faint);
-  padding: 7px 2px 3px;
-  display: flex; justify-content: space-between;
-}
-.plates figcaption b { color: var(--blue); font-weight: 600; }
-
-/* ── SKILLS ───────────────────────────────────────────────── */
-.spec-grid {
-  display: grid; grid-template-columns: 1fr 1fr; gap: 0;
-  border: 1.5px solid var(--ink);
-}
-.spec-cell { padding: 26px 30px; border: 1px solid var(--line); margin: -0.5px; }
-.spec-cell h4 {
-  font-family: 'IBM Plex Mono', monospace;
-  font-size: 11px; font-weight: 600; letter-spacing: 0.22em; text-transform: uppercase;
-  color: var(--blue);
-  margin-bottom: 14px;
-  display: flex; align-items: center; gap: 10px;
-}
-.spec-cell h4::after { content: ''; flex: 1; border-top: 1px dotted var(--faint); }
-.spec-cell ul { list-style: none; columns: 1; }
-.spec-cell li {
-  font-size: 14.5px; color: var(--ink2);
-  padding: 4px 0;
-  display: flex; gap: 10px; align-items: baseline;
-}
-.spec-cell li::before {
-  content: '☐';
-  color: var(--faint); font-size: 12px;
-}
-.spec-cell li.ok::before { content: '☑'; color: var(--red); }
-
-/* ── EDUCATION ────────────────────────────────────────────── */
-.edu-row {
-  display: flex; justify-content: space-between; align-items: center; gap: 24px; flex-wrap: wrap;
-  border: 1.5px solid var(--ink);
-  padding: 30px 34px;
-}
-.edu-row h3 { font-weight: 800; font-size: 26px; line-height: 1.15; }
-.edu-row .sch {
-  font-family: 'IBM Plex Mono', monospace;
-  font-size: 12px; color: var(--ink2); margin-top: 6px;
-}
-.seal {
-  font-family: 'IBM Plex Mono', monospace;
-  font-size: 10.5px; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase;
-  color: var(--blue);
-  border: 2px solid var(--blue); border-radius: 50%;
-  width: 108px; height: 108px; flex-shrink: 0;
-  display: flex; align-items: center; justify-content: center; text-align: center;
-  transform: rotate(-7deg);
-  line-height: 1.5;
+.ledger div{padding:18px 22px;border-left:1px solid var(--hair-dk)}
+.ledger div:first-child{border-left:none;padding-left:0}
+.ledger dt{font-family:'Space Mono',monospace;font-size:9.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--onink-soft);margin-bottom:7px}
+.ledger dd{font-family:'Bricolage Grotesque',sans-serif;font-size:15px;font-weight:500;color:var(--onink);line-height:1.35}
+@media(max-width:720px){
+  .ledger{grid-template-columns:1fr 1fr}
+  .ledger div{border-left:1px solid var(--hair-dk);padding:14px 16px}
+  .ledger div:first-child{padding-left:16px}
+  .ledger div:nth-child(odd){border-left:none;padding-left:0}
 }
 
-/* ── CONTACT / APPENDIX ───────────────────────────────────── */
-.contact-table { width: 100%; border-collapse: collapse; font-size: 15px; }
-.contact-table td { border: 1px solid var(--line); padding: 16px 20px; }
-.contact-table td:first-child {
-  font-family: 'IBM Plex Mono', monospace;
-  font-size: 10px; font-weight: 600; letter-spacing: 0.2em; text-transform: uppercase;
-  color: var(--faint);
-  width: 30%;
-  background: rgba(34,68,184,0.035);
-}
-.contact-table a { text-decoration: none; border-bottom: 1px dotted var(--blue); }
-.contact-table a:hover { color: var(--red); border-color: var(--red); }
-.contact-wrap { position: relative; }
-.contact-wrap .stamp { right: -8px; top: -54px; transform: rotate(-9deg); font-size: 17px; padding: 12px 22px; }
-.sign-off {
-  margin-top: 34px;
-  display: flex; justify-content: space-between; align-items: flex-end; gap: 20px; flex-wrap: wrap;
-}
-.sign-line {
-  font-family: 'IBM Plex Mono', monospace;
-  font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase;
-  color: var(--faint);
-}
-.sign-line .pen { font-size: 30px; display: block; transform: rotate(-3deg); margin-bottom: 2px; }
+/* ── SECTION SHELL ───────────────────────────────────────── */
+.wrap{max-width:1180px;margin:0 auto;padding:0 clamp(18px,4vw,44px)}
+section.band{padding:clamp(72px,10vw,132px) 0}
+.s-head{display:grid;grid-template-columns:96px 1fr;gap:0 32px;align-items:end;margin-bottom:clamp(38px,5vw,60px)}
+.s-idx{font-family:'Space Mono',monospace;font-size:13px;font-weight:700;letter-spacing:.1em;color:var(--cobalt)}
+.s-title{font-weight:800;letter-spacing:-.02em;line-height:1;font-size:clamp(34px,6vw,66px)}
+.s-title .thin{font-weight:400;font-style:normal;color:var(--soft)}
+.s-kicker{grid-column:2;font-family:'Space Mono',monospace;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--faint);margin-top:14px}
+@media(max-width:640px){.s-head{grid-template-columns:1fr;gap:8px}.s-kicker{grid-column:1}}
 
-/* ── REVEAL ───────────────────────────────────────────────── */
-.rv { opacity: 0; transform: translateY(18px); transition: opacity 0.6s ease, transform 0.6s ease; }
-.rv.in { opacity: 1; transform: translateY(0); }
+/* reveal */
+.rv{opacity:0;transform:translateY(22px);transition:opacity .7s ease,transform .7s ease}
+.rv.in{opacity:1;transform:none}
 
-@media (prefers-reduced-motion: reduce) {
-  html { scroll-behavior: auto; }
-  .rv { opacity: 1; transform: none; transition: none; }
-  .plates figure, .plates figure:hover { transition: none; transform: none; }
-}
+/* ── OVERVIEW ────────────────────────────────────────────── */
+.about{display:grid;grid-template-columns:96px minmax(0,1fr);gap:0 32px}
+.about .lede{grid-column:2;font-size:clamp(20px,2.4vw,25px);line-height:1.5;color:var(--text);font-weight:400}
+.about .lede em{font-style:normal;background:linear-gradient(transparent 62%,rgba(30,58,214,.16) 0);padding:0 1px}
+.about .cols{grid-column:2;margin-top:26px;column-count:2;column-gap:40px}
+.about .cols p{margin:0 0 16px;break-inside:avoid;color:var(--soft);font-size:17px}
+.about strong{color:var(--text);font-weight:600}
+@media(max-width:760px){.about{grid-template-columns:1fr}.about .lede,.about .cols{grid-column:1}.about .cols{column-count:1}}
 
-/* ── RESPONSIVE ───────────────────────────────────────────── */
-@media (max-width: 1380px) { .toc { display: none; } }
-@media (max-width: 860px) {
-  .sheet { padding: 44px 30px 40px; }
-  .sheet::before { display: none; }
-  .cover-frame { padding: 44px 22px 40px; }
-  .stamp { right: 4px; top: -18px; font-size: 12px; }
-  .margin-note { float: none; width: auto; margin: 14px 0; }
-  .facts { grid-template-columns: 1fr 1fr; }
-  .fact:nth-child(3) { border-left: none; border-top: 1px solid var(--line); }
-  .fact:nth-child(4) { border-top: 1px solid var(--line); }
-  .plates { grid-template-columns: 1fr; }
-  .plates img { height: 200px; }
-  .spec-grid { grid-template-columns: 1fr; }
-  .entry-spec td { display: block; border-top: none; }
-  .entry-spec tr:first-child td:first-child { border-top: 1px solid var(--line); }
-  .docbar { font-size: 9px; padding: 0 14px; }
-  .docbar .hide-sm { display: none; }
+/* stats — big numerals, hairline-split, no boxes */
+.stats{display:grid;grid-template-columns:repeat(4,1fr);margin-top:clamp(40px,5vw,64px);border-top:1px solid var(--hair)}
+.stat{padding:26px 24px 22px;border-left:1px solid var(--hair)}
+.stat:first-child{border-left:none;padding-left:0}
+.stat-n{font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:clamp(40px,6vw,60px);letter-spacing:-.03em;line-height:1}
+.stat-n u{text-decoration:none;color:var(--cobalt)}
+.stat-l{font-family:'Space Mono',monospace;font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--faint);margin-top:12px;display:block}
+@media(max-width:720px){.stats{grid-template-columns:1fr 1fr}.stat{border-left:1px solid var(--hair)}.stat:nth-child(odd){border-left:none;padding-left:0}.stat:nth-child(n+3){border-top:1px solid var(--hair)}}
+
+/* ── WORK (timeline of studios) ──────────────────────────── */
+.works{position:relative}
+.work{display:grid;grid-template-columns:96px minmax(0,1fr);gap:0 32px;padding-bottom:clamp(56px,7vw,86px)}
+.work:last-child{padding-bottom:0}
+.work-rail{position:relative}
+.work-rail::before{content:'';position:absolute;right:0;top:9px;bottom:-1px;width:1px;
+  background:linear-gradient(var(--cobalt),rgba(30,58,214,.28));}
+.work:last-child .work-rail::before{background:linear-gradient(var(--cobalt),rgba(30,58,214,0));bottom:auto;height:64px}
+.work-node{position:absolute;right:-4.5px;top:5px;width:10px;height:10px;border-radius:50%;background:var(--paper);border:2.5px solid var(--cobalt);z-index:2}
+.work-idx{font-family:'Space Mono',monospace;font-weight:700;font-size:12px;letter-spacing:.06em;color:var(--cobalt);display:block;padding-right:20px;text-align:right;margin-top:2px}
+
+.work-head{display:flex;align-items:baseline;gap:16px;flex-wrap:wrap;margin-bottom:16px}
+.work-head h3{font-weight:800;letter-spacing:-.02em;font-size:clamp(30px,4.6vw,50px);line-height:1}
+.work-tag{font-family:'Space Mono',monospace;font-size:10px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--cobalt);border:1px solid var(--cobalt);border-radius:100px;padding:4px 11px;margin-left:auto}
+
+.meta{display:flex;flex-wrap:wrap;gap:0;border:1px solid var(--hair);margin-bottom:26px}
+.meta div{padding:11px 18px;border-left:1px solid var(--hair);flex:1 1 auto;min-width:140px}
+.meta div:first-child{border-left:none}
+.meta dt{font-family:'Space Mono',monospace;font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--faint);margin-bottom:4px}
+.meta dd{font-family:'Bricolage Grotesque',sans-serif;font-weight:600;font-size:14.5px;color:var(--text)}
+@media(max-width:640px){.meta div{flex-basis:50%;min-width:0}.meta div:nth-child(odd){border-left:none}}
+
+.work-body p{color:var(--soft);margin-bottom:15px;max-width:70ch}
+.work-body p.lead{font-size:clamp(19px,2.2vw,22px);line-height:1.5;color:var(--text);margin-bottom:18px}
+.work-body em{font-style:italic;font-weight:500;color:var(--text)}
+.work-body strong{color:var(--text);font-weight:600}
+
+.kw{margin:22px 0 4px;display:flex;flex-wrap:wrap;gap:7px}
+.kw span{font-family:'Space Mono',monospace;font-size:10.5px;letter-spacing:.04em;color:var(--soft);
+  border:1px solid var(--hair);background:var(--paper-hi);padding:4px 10px;transition:.18s}
+.kw span:hover{border-color:var(--cobalt);color:var(--cobalt)}
+
+/* screenshot gallery */
+.plates{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:26px}
+.plate{position:relative;overflow:hidden;background:var(--ink);border:1px solid var(--hair)}
+.plate img{display:block;width:100%;height:190px;object-fit:cover;transition:transform .5s cubic-bezier(.2,.7,.2,1);filter:saturate(1.02)}
+.plate:hover img{transform:scale(1.05)}
+.plate figcaption{position:absolute;left:0;right:0;bottom:0;display:flex;justify-content:space-between;
+  padding:8px 11px;font-family:'Space Mono',monospace;font-size:9px;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--onink);background:linear-gradient(transparent,rgba(19,22,17,.82))}
+.plate figcaption b{color:var(--cobalt-hi);font-weight:700}
+/* corner ticks — blockout reference */
+.plate::before,.plate::after{content:'';position:absolute;width:12px;height:12px;border:1.5px solid var(--cobalt-hi);opacity:0;transition:opacity .25s}
+.plate::before{top:8px;left:8px;border-right:0;border-bottom:0}
+.plate::after{top:8px;right:8px;border-left:0;border-bottom:0}
+.plate:hover::before,.plate:hover::after{opacity:.9}
+@media(max-width:640px){.plates{grid-template-columns:1fr}.plate img{height:230px}}
+
+/* ── CAPABILITIES ────────────────────────────────────────── */
+.caps{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid var(--hair)}
+.cap{padding:26px 26px 30px 0;border-left:1px solid var(--hair);padding-left:26px}
+.cap:first-child{border-left:none;padding-left:0}
+.cap h4{font-family:'Space Mono',monospace;font-size:11px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;
+  color:var(--cobalt);margin-bottom:18px;display:flex;align-items:baseline;gap:8px}
+.cap h4 i{font-style:normal;color:var(--faint)}
+.cap ul{list-style:none}
+.cap li{font-family:'Bricolage Grotesque',sans-serif;font-weight:500;font-size:15.5px;color:var(--text);
+  padding:8px 0;border-top:1px solid var(--hair);display:flex;gap:10px;align-items:baseline;line-height:1.3}
+.cap li:first-child{border-top:none}
+.cap li::before{content:'';flex:0 0 6px;width:6px;height:6px;margin-top:7px;background:var(--cobalt)}
+@media(max-width:860px){.caps{grid-template-columns:1fr 1fr}.cap{padding-left:26px;border-left:1px solid var(--hair)}.cap:nth-child(odd){border-left:none;padding-left:0}.cap:nth-child(n+3){border-top:1px solid var(--hair);padding-top:24px}}
+@media(max-width:520px){.caps{grid-template-columns:1fr}.cap{border-left:none;padding-left:0;border-top:1px solid var(--hair);padding-top:24px}.cap:first-child{border-top:none}}
+
+/* ── EDUCATION ───────────────────────────────────────────── */
+.edu{grid-column:2;display:flex;justify-content:space-between;align-items:flex-end;gap:28px;flex-wrap:wrap;
+  border-top:2px solid var(--text);padding-top:24px}
+.edu h3{font-weight:800;letter-spacing:-.02em;font-size:clamp(24px,3.4vw,38px);line-height:1.05;max-width:22ch}
+.edu .sch{font-family:'Space Mono',monospace;font-size:12px;letter-spacing:.06em;color:var(--soft);margin-top:12px}
+.edu .yr{font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:clamp(30px,5vw,54px);color:var(--cobalt);letter-spacing:-.03em;line-height:1}
+.edu-wrap{display:grid;grid-template-columns:96px minmax(0,1fr);gap:0 32px}
+@media(max-width:640px){.edu-wrap{grid-template-columns:1fr}.edu{grid-column:1}}
+
+/* ── CONTACT (dark bookend) ──────────────────────────────── */
+.foot{background:var(--ink);color:var(--onink);padding:clamp(72px,10vw,120px) 0 46px;position:relative;overflow:hidden}
+.foot::before{content:'';position:absolute;inset:0;pointer-events:none;
+  background-image:linear-gradient(var(--hair-dk) 1px,transparent 1px),linear-gradient(90deg,var(--hair-dk) 1px,transparent 1px);
+  background-size:64px 64px;
+  -webkit-mask-image:radial-gradient(100% 100% at 12% 100%,#000,transparent 68%);
+  mask-image:radial-gradient(100% 100% at 12% 100%,#000,transparent 68%);opacity:.6}
+.foot .wrap{position:relative;z-index:2}
+.foot .eyebrow{color:var(--cobalt-hi)}
+.foot h2{font-weight:800;letter-spacing:-.025em;line-height:.98;font-size:clamp(38px,8vw,92px);margin:16px 0 8px}
+.foot h2 .thin{-webkit-text-stroke:1px var(--onink);color:transparent}
+.contact{display:grid;grid-template-columns:repeat(4,1fr);margin-top:clamp(36px,5vw,56px);border-top:1px solid var(--hair-dk)}
+.contact a,.contact span{display:block}
+.contact div{padding:22px 22px;border-left:1px solid var(--hair-dk)}
+.contact div:first-child{border-left:none;padding-left:0}
+.contact dt{font-family:'Space Mono',monospace;font-size:9.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--onink-soft);margin-bottom:9px}
+.contact dd{font-family:'Bricolage Grotesque',sans-serif;font-size:15px;font-weight:500}
+.contact a{color:var(--onink);border-bottom:1px solid transparent;transition:.2s;word-break:break-word}
+.contact a:hover{color:var(--cobalt-hi);border-color:var(--cobalt-hi)}
+@media(max-width:720px){.contact{grid-template-columns:1fr 1fr}.contact div{border-left:1px solid var(--hair-dk)}.contact div:nth-child(odd){border-left:none;padding-left:0}.contact div:nth-child(n+3){border-top:1px solid var(--hair-dk)}}
+.sign{margin-top:52px;display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;
+  border-top:1px solid var(--hair-dk);padding-top:20px;
+  font-family:'Space Mono',monospace;font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--onink-soft)}
+.sign b{color:var(--onink);font-weight:700}
+
+/* ── SOLO PROJECT (featured, dark) ───────────────────────── */
+.solo{background:var(--ink);color:var(--onink);position:relative;overflow:hidden;padding:clamp(72px,10vw,124px) 0}
+.solo::before{content:'';position:absolute;inset:0;pointer-events:none;
+  background-image:linear-gradient(var(--hair-dk) 1px,transparent 1px),linear-gradient(90deg,var(--hair-dk) 1px,transparent 1px);
+  background-size:64px 64px;
+  -webkit-mask-image:radial-gradient(110% 92% at 88% 2%,#000,transparent 66%);
+  mask-image:radial-gradient(110% 92% at 88% 2%,#000,transparent 66%);opacity:.6}
+.solo .wrap{position:relative;z-index:2}
+.solo .s-idx{color:var(--cobalt-hi)}
+.solo .s-title{color:var(--onink)}
+.solo .s-title .thin{color:var(--onink-soft)}
+.solo .s-kicker{color:var(--onink-soft)}
+.solo h3{font-family:'Bricolage Grotesque',sans-serif;font-weight:800;letter-spacing:-.02em;line-height:1;font-size:clamp(34px,6.4vw,66px);color:var(--onink)}
+.solo .work-tag{color:var(--cobalt-hi);border-color:var(--cobalt-hi)}
+.solo .meta{border-color:var(--hair-dk)}
+.solo .meta div{border-left-color:var(--hair-dk)}
+.solo .meta dt{color:var(--onink-soft)}
+.solo .meta dd{color:var(--onink)}
+.solo .work-body p{color:var(--onink-soft)}
+.solo .work-body p.lead{color:var(--onink)}
+.solo .work-body strong{color:var(--onink)}
+.solo .work-body em{color:#fff;font-style:italic}
+.solo .kw span{border-color:var(--hair-dk);background:rgba(233,236,224,.03);color:var(--onink-soft)}
+.solo .kw span:hover{border-color:var(--cobalt-hi);color:var(--cobalt-hi)}
+.solo-gallery{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:28px}
+.solo-gallery .plate{border-color:var(--hair-dk)}
+.solo-gallery .plate.big{grid-column:1 / -1}
+.solo-gallery .plate img{height:230px}
+.solo-gallery .plate.big img{height:clamp(260px,40vw,430px)}
+.solo-cta{margin-top:26px}
+@media(max-width:640px){.solo-gallery{grid-template-columns:1fr}.solo-gallery .plate img,.solo-gallery .plate.big img{height:240px}}
+
+@media(prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  .rv{opacity:1;transform:none;transition:none}
+  .curve .plot{animation:none;stroke-dashoffset:0}
+  .curve .node{animation:none;opacity:1}
+  .curve .fillband{animation:none;opacity:.16}
+  .plate img,.plate:hover img{transition:none;transform:none}
 }
 </style>
 </head>
 <body>
 
-<!-- DOCUMENT HEADER BAR -->
-<div class="docbar">
-  <span class="hide-sm">DOC NO. AS-2026-LD &nbsp;·&nbsp; REV 2.0</span>
-  <span><span class="strike">CONFIDENTIAL</span><span class="pen">public, actually →</span></span>
-  <a href="#appendix">SKIP TO CONTACT ↓</a>
-</div>
+<div class="slider"><i id="sliderfill"></i></div>
 
-<!-- TABLE OF CONTENTS -->
-<nav class="toc" aria-label="Table of contents">
-  <div class="toc-title">Contents</div>
-  <a href="#cover"><span>0.0 Cover</span><span class="dots"></span><span class="pg">01</span></a>
-  <a href="#overview"><span>1.0 Overview</span><span class="dots"></span><span class="pg">02</span></a>
-  <a href="#production"><span>2.0 Production</span><span class="dots"></span><span class="pg">03</span></a>
-  <a href="#capabilities"><span>3.0 Capabilities</span><span class="dots"></span><span class="pg">04</span></a>
-  <a href="#education"><span>4.0 Education</span><span class="dots"></span><span class="pg">05</span></a>
-  <a href="#appendix"><span>A. Contact</span><span class="dots"></span><span class="pg">06</span></a>
-</nav>
+<header class="bar" id="bar">
+  <span class="id">Adalat Samadov</span>
+  <nav>
+    <a href="#overview">Overview</a>
+    <a href="#work">Work</a>
+    <a href="#solo">Nullwake</a>
+    <a href="#capabilities">Skills</a>
+    <a href="#contact" class="cta">Contact</a>
+  </nav>
+</header>
 
-<main>
-
-<!-- ════ SHEET 1 · COVER ════ -->
-<section class="sheet cover" id="cover">
-  <div class="cover-frame">
-    <div class="stamp">Open to Work</div>
-    <div class="cover-eyebrow">Game Design Document · Portfolio Edition</div>
-    <h1>Adalat<br>Samadov</h1>
-    <p class="cover-roles"><b>Game Designer</b> &nbsp;·&nbsp; <b>Level Designer</b></p>
-    <table class="cover-meta">
-      <tr><td>Author</td><td><b>Adalat Samadov</b></td></tr>
-      <tr><td>Discipline</td><td>Game design, F2P economy &amp; live-ops, level design</td></tr>
-      <tr><td>Engines</td><td>Unity · Unreal Engine</td></tr>
-      <tr><td>Languages</td><td>English · Russian · Azerbaijani · Turkish</td></tr>
-      <tr><td>Location</td><td>Debrecen, Hungary</td></tr>
-      <tr><td>Status</td><td><b>Available for work</b></td></tr>
-    </table>
-    <div class="cover-actions">
-      <a href="#production" class="btn btn-ink">Read the Work</a>
-      <a href="https://www.linkedin.com/in/adalat-samadov-b418a03a4" target="_blank" rel="noopener" class="btn btn-ghost">LinkedIn</a>
+<!-- ════ HERO ════ -->
+<section class="hero" id="top">
+  <div class="hero-inner">
+    <span class="eyebrow">Portfolio — 2026</span>
+    <h1>Adalat<br><span class="l2">Samadov</span></h1>
+    <div class="hero-role">
+      <span><b>Game Designer</b></span><span>/</span><span><b>Level Designer</b></span>
+    </div>
+    <p class="hero-sub">Free-to-play production and live operations — tuning the systems, economies, and levels players stay inside.</p>
+    <div class="hero-actions">
+      <a href="#work" class="btn btn-fill">Read the work</a>
+      <a href="https://www.linkedin.com/in/adalat-samadov-b418a03a4" target="_blank" rel="noopener" class="btn btn-line">LinkedIn ↗</a>
     </div>
   </div>
 
-  <div class="rev-title">Revision History</div>
-  <table class="rev">
-    <tr><th>Rev</th><th>Period</th><th>Change</th><th>Studio</th></tr>
-    <tr><td>0.1</td><td>05/2023 – 04/2024</td><td>Game Designer — live-ops, <i>Happy Clinic</i></td><td><a href="#e-nordcurrent">Nordcurrent</a></td></tr>
-    <tr><td>1.0</td><td>01/2023 – 11/2025</td><td>Game Designer — development → live-ops, <i>All in Hole</i></td><td><a href="#e-homa">Homa Games</a></td></tr>
-    <tr><td>1.5</td><td>02/2025 – 11/2025</td><td>Game Designer — hyper-casual levels</td><td><a href="#e-alictus">Alictus</a></td></tr>
-    <tr><td>2.0</td><td>12/2025 – 06/2026</td><td>Game Designer — F2P economy &amp; live-ops</td><td><a href="#e-kolibri">Kolibri Games</a></td></tr>
-  </table>
+  <!-- the tuning curve -->
+  <div class="curve" aria-hidden="true">
+    <svg viewBox="0 0 1180 230" preserveAspectRatio="none">
+      <defs>
+        <linearGradient id="cg" x1="0" x2="0" y1="0" y2="1">
+          <stop offset="0" stop-color="#4B67FF"/><stop offset="1" stop-color="#4B67FF" stop-opacity="0"/>
+        </linearGradient>
+      </defs>
+      <line class="grid-line" x1="0" y1="1" x2="1180" y2="1"/>
+      <line class="grid-line" x1="0" y1="76" x2="1180" y2="76"/>
+      <line class="grid-line" x1="0" y1="152" x2="1180" y2="152"/>
+      <path class="fillband" d="M0,210 C260,206 430,182 620,120 C820,55 980,30 1180,20 L1180,230 L0,230 Z"/>
+      <path class="plot" id="plot" d="M0,210 C260,206 430,182 620,120 C820,55 980,30 1180,20"/>
+      <circle class="node" cx="0"    cy="210" r="5" style="animation-delay:.5s"/>
+      <circle class="node" cx="430"  cy="182" r="5" style="animation-delay:1.05s"/>
+      <circle class="node" cx="620"  cy="120" r="5" style="animation-delay:1.45s"/>
+      <circle class="node" cx="980"  cy="30"  r="5" style="animation-delay:1.9s"/>
+      <circle class="node" cx="1180" cy="20"  r="6" style="animation-delay:2.15s"/>
+    </svg>
+  </div>
 
-  <div class="sheet-foot"><span>Adalat Samadov · Portfolio</span><span>Page 01 / 06</span></div>
+  <div class="hero-inner">
+    <dl class="ledger">
+      <div><dt>Engines</dt><dd>Unity · Unreal Engine</dd></div>
+      <div><dt>Languages</dt><dd>English · Russian · Azerbaijani · Turkish</dd></div>
+      <div><dt>Location</dt><dd>Debrecen, Hungary</dd></div>
+      <div><dt>Status</dt><dd>Available for work</dd></div>
+    </dl>
+  </div>
 </section>
 
-<!-- ════ SHEET 2 · OVERVIEW ════ -->
-<section class="sheet rv" id="overview">
-  <div class="sec-head">
-    <span class="sec-no">SECTION 1.0</span>
-    <h2 class="sec-title">Overview — About Me</h2>
-  </div>
+<!-- ════ 01 · OVERVIEW ════ -->
+<section class="band" id="overview">
+  <div class="wrap rv">
+    <div class="s-head">
+      <span class="s-idx">01</span>
+      <h2 class="s-title">Overview</h2>
+      <span class="s-kicker">About the designer</span>
+    </div>
 
-  <div class="body-copy">
-    <div class="margin-note note">this is the<br>whole job,<br>honestly <span class="arrow">←</span></div>
-    <p>I am a game designer with hands-on experience across <strong>free-to-play mobile production and live operations</strong>, working in Unity and Unreal Engine on everything from deep idle and simulation economies to tight hyper-casual loops.</p>
-    <p>My approach centers on <strong>player-first thinking</strong> — every system, event, and level I design is evaluated through the lens of how it makes the player feel. Progression, pacing, economy balance, and flow are <span class="circled">not afterthoughts</span>; they are the design.</p>
-    <p>I work fluently across <strong>game &amp; level design, economy and battle-pass balancing, GDD authoring, engine integration, and cross-team collaboration</strong> — comfortable preparing task breakdowns for programmers and artists, running A/B experiments, and driving iteration from first concept to shipped, data-tuned content.</p>
-  </div>
+    <div class="about">
+      <p class="lede">I am a game designer with hands-on experience across <em>free-to-play mobile production and live operations</em>, working in Unity and Unreal Engine on everything from deep idle and simulation economies to tight hyper-casual loops.</p>
+      <div class="cols">
+        <p>My approach centers on <strong>player-first thinking</strong> — every system, event, and level I design is evaluated through the lens of how it makes the player feel. Progression, pacing, economy balance, and flow are not afterthoughts; they are the design.</p>
+        <p>I work fluently across <strong>game &amp; level design, economy and battle-pass balancing, GDD authoring, engine integration, and cross-team collaboration</strong> — comfortable preparing task breakdowns for programmers and artists, running A/B experiments, and driving iteration from first concept to shipped, data-tuned content.</p>
+      </div>
+    </div>
 
-  <div class="facts">
-    <div class="fact"><div class="fact-n">3<em>+</em></div><div class="fact-l">Years Experience</div></div>
-    <div class="fact"><div class="fact-n">4</div><div class="fact-l">Studios Worked At</div></div>
-    <div class="fact"><div class="fact-n">F2P</div><div class="fact-l">+ Live-Ops Focus</div></div>
-    <div class="fact"><div class="fact-n">4</div><div class="fact-l">Languages Spoken</div></div>
+    <div class="stats">
+      <div class="stat"><span class="stat-n">3<u>+</u></span><span class="stat-l">Years experience</span></div>
+      <div class="stat"><span class="stat-n">4</span><span class="stat-l">Studios worked at</span></div>
+      <div class="stat"><span class="stat-n"><u>F2P</u></span><span class="stat-l">+ Live-ops focus</span></div>
+      <div class="stat"><span class="stat-n">4</span><span class="stat-l">Languages spoken</span></div>
+    </div>
   </div>
-
-  <div class="sheet-foot"><span>Section 1.0 · Overview</span><span>Page 02 / 06</span></div>
 </section>
 
-<!-- ════ SHEET 3 · PRODUCTION HISTORY ════ -->
-<section class="sheet rv" id="production">
-  <div class="sec-head">
-    <span class="sec-no">SECTION 2.0</span>
-    <h2 class="sec-title">Production History — Selected Work</h2>
+<!-- ════ 02 · WORK ════ -->
+<section class="band" id="work" style="padding-top:0">
+  <div class="wrap">
+    <div class="s-head rv">
+      <span class="s-idx">02</span>
+      <h2 class="s-title">Production <span class="thin">history</span></h2>
+      <span class="s-kicker">Selected work — 2023 → 2026</span>
+    </div>
+
+    <div class="works">
+
+      <!-- 2.1 KOLIBRI -->
+      <article class="work rv" id="e-kolibri">
+        <div class="work-rail"><span class="work-node"></span><span class="work-idx">2.1</span></div>
+        <div class="work-main">
+          <div class="work-head"><h3>Kolibri Games</h3><span class="work-tag">Latest</span></div>
+          <dl class="meta">
+            <div><dt>Role</dt><dd>Game Designer</dd></div>
+            <div><dt>Period</dt><dd>12/2025 – 06/2026</dd></div>
+            <div><dt>Type</dt><dd>Mobile Game Development</dd></div>
+            <div><dt>Setup</dt><dd>Remote</dd></div>
+          </dl>
+          <div class="work-body">
+            <p class="lead">Joined Kolibri Games as a Game Designer on <em>Idle Miner Tycoon: Gold Games</em> — a leading F2P idle simulation title with 250M+ downloads, built around a deep mining economy, seasonal live events, and weekly content updates.</p>
+            <p>Worked fully remote as part of a distributed team operating in a high-velocity live-service environment. Owned the design and balancing of the free-to-play game economy — including mine progression systems, Super Manager ability sets, seasonal reward structures, and in-game currency sinks. Monitored core KPIs each season and iterated based on live player data to sustain engagement and monetisation performance across the scaled player base.</p>
+            <p>Planned and executed live operations content cycles — coordinating weekly event mines, seasonal themed events, and limited-time Super Manager releases. Designed and documented A/B experiments to test economy and progression hypotheses, tracking metrics and translating findings into actionable balance changes across weekly update cycles.</p>
+          </div>
+          <div class="kw">
+            <span>F2P Game Design</span><span>Game Economy</span><span>Live Operations</span><span>Data-Driven Optimization</span><span>Experiment Design</span><span>Unity</span><span>LDD Authoring</span><span>Remote Collaboration</span><span>Retention Design</span>
+          </div>
+          <div class="plates">
+            <figure class="plate"><img src="D1.jpg" alt="Idle Miner Tycoon screenshot 1"><figcaption><b>Fig. 2.1-A</b><span>Idle Miner Tycoon</span></figcaption></figure>
+            <figure class="plate"><img src="D2.jpg" alt="Idle Miner Tycoon screenshot 2"><figcaption><b>Fig. 2.1-B</b><span>Idle Miner Tycoon</span></figcaption></figure>
+            <figure class="plate"><img src="D3.jpg" alt="Idle Miner Tycoon screenshot 3"><figcaption><b>Fig. 2.1-C</b><span>Idle Miner Tycoon</span></figcaption></figure>
+          </div>
+        </div>
+      </article>
+
+      <!-- 2.2 ALICTUS -->
+      <article class="work rv" id="e-alictus">
+        <div class="work-rail"><span class="work-node"></span><span class="work-idx">2.2</span></div>
+        <div class="work-main">
+          <div class="work-head"><h3>Alictus</h3></div>
+          <dl class="meta">
+            <div><dt>Role</dt><dd>Game Designer</dd></div>
+            <div><dt>Period</dt><dd>02/2025 – 11/2025</dd></div>
+            <div><dt>Type</dt><dd>Mobile Level Development</dd></div>
+            <div><dt>Focus</dt><dd>Hyper-casual</dd></div>
+          </dl>
+          <div class="work-body">
+            <p class="lead">Joined Alictus as a Game Designer focused on hyper-casual mobile level development — a fast-paced environment requiring high-volume concept output and rapid design validation.</p>
+            <p>Ideated, scoped, and prototyped new gameplay concepts in Unity, moving from rough mechanic ideas to testable builds within tight iteration cycles. Designed and balanced level progressions with a strong emphasis on player retention — analysing early-session drop-off points, adjusting difficulty curves, and tuning reward timing to improve engagement metrics. Applied data-informed design thinking to refine core loops and reduce friction at critical onboarding stages.</p>
+            <p>Contributed to improving overall gameplay clarity and mechanic legibility, ensuring new players could understand and engage with core systems intuitively without onboarding text. Worked collaboratively within a structured pipeline to bring multiple concurrent concepts from prototype to a publishable state.</p>
+          </div>
+          <div class="kw">
+            <span>Hyper-Casual Design</span><span>Gameplay Concepting</span><span>Unity Prototyping</span><span>Rapid Iteration</span><span>Retention Design</span><span>Difficulty Balancing</span><span>Core Loop Design</span>
+          </div>
+          <div class="plates">
+            <figure class="plate"><img src="c1.jpg" alt="Alictus screenshot 1"><figcaption><b>Fig. 2.2-A</b><span>Alictus</span></figcaption></figure>
+            <figure class="plate"><img src="c2.jpg" alt="Alictus screenshot 2"><figcaption><b>Fig. 2.2-B</b><span>Alictus</span></figcaption></figure>
+            <figure class="plate"><img src="c3.jpg" alt="Alictus screenshot 3"><figcaption><b>Fig. 2.2-C</b><span>Alictus</span></figcaption></figure>
+          </div>
+        </div>
+      </article>
+
+      <!-- 2.3 HOMA GAMES -->
+      <article class="work rv" id="e-homa">
+        <div class="work-rail"><span class="work-node"></span><span class="work-idx">2.3</span></div>
+        <div class="work-main">
+          <div class="work-head"><h3>Homa Games</h3><span class="work-tag">Featured</span></div>
+          <dl class="meta">
+            <div><dt>Role</dt><dd>Game Designer</dd></div>
+            <div><dt>Period</dt><dd>01/2023 – 11/2025</dd></div>
+            <div><dt>Type</dt><dd>Mobile Game Dev → Live-Ops</dd></div>
+            <div><dt>Setup</dt><dd>Remote</dd></div>
+          </dl>
+          <div class="work-body">
+            <p class="lead">Worked as a Game Designer at Homa Games on <em>All in Hole</em> — a hybrid-casual black-hole title that reworked the classic arcade "hole" loop into a deep, level-based progression game that went on to break into the global top-50 grossing charts.</p>
+            <p>Contributed across the full lifecycle: first through the core development phase that turned a single-mechanic prototype into a structured, metagame-driven product, then through sustained live operations. Operated fully remote as part of a distributed international team. During development, helped design and specify the systems that turned the arcade core into a retention-driven game — level-based progression, the lives/energy loop, booster mechanics (Magnet, Chrono, Lightning), and the Royal-Match-style events metagame layered on top of core gameplay. Authored detailed game design documentation defining system behaviour, progression pacing, reward logic, and trigger conditions, used directly by engineers and artists for implementation.</p>
+            <p>In the live-ops phase, owned the design and balancing of the free-to-play economy and seasonal content — including the Treasure Pass (battle pass) seasons, Team Battles, currency sinks, and the recurring themed level packs (100 new levels per release) that keep the content calendar full. Tuned difficulty curves, reward tracks, and upsell moments to protect both progression feel and monetisation across a large, active player base.</p>
+            <p>Designed and documented A/B experiments across regions — testing tutorial flow, difficulty ramps, event configurations, and offer timing — then translated live KPI and cohort data into concrete balance and design changes each update cycle. Worked in a fast, data-driven pipeline where every progression and economy decision was validated against real player behaviour.</p>
+          </div>
+          <div class="kw">
+            <span>F2P Game Design</span><span>Game Economy</span><span>Battle Pass Design</span><span>Live Operations</span><span>Events Metagame</span><span>A/B Testing</span><span>Progression Balancing</span><span>GDD Authoring</span><span>Unity</span><span>Data-Driven Design</span><span>Remote Collaboration</span>
+          </div>
+          <div class="plates">
+            <figure class="plate"><img src="b1.jpg" alt="All in Hole screenshot 1"><figcaption><b>Fig. 2.3-A</b><span>All in Hole</span></figcaption></figure>
+            <figure class="plate"><img src="b2.jpg" alt="All in Hole screenshot 2"><figcaption><b>Fig. 2.3-B</b><span>All in Hole</span></figcaption></figure>
+            <figure class="plate"><img src="b3.jpg" alt="All in Hole screenshot 3"><figcaption><b>Fig. 2.3-C</b><span>All in Hole</span></figcaption></figure>
+          </div>
+        </div>
+      </article>
+
+      <!-- 2.4 NORDCURRENT -->
+      <article class="work rv" id="e-nordcurrent">
+        <div class="work-rail"><span class="work-node"></span><span class="work-idx">2.4</span></div>
+        <div class="work-main">
+          <div class="work-head"><h3>Nordcurrent</h3></div>
+          <dl class="meta">
+            <div><dt>Role</dt><dd>Game Designer</dd></div>
+            <div><dt>Period</dt><dd>05/2023 – 04/2024</dd></div>
+            <div><dt>Type</dt><dd>Mobile Live Operations</dd></div>
+            <div><dt>Focus</dt><dd>Events &amp; Balancing</dd></div>
+          </dl>
+          <div class="work-body">
+            <p class="lead">Worked as a Game Designer at Nordcurrent on <em>Happy Clinic</em> — a free-to-play time-management / hospital simulation game with a long-running live-service content calendar.</p>
+            <p>Focused on the live-operations side of the title: keeping an established player base engaged through a steady stream of new content, events, and balance updates. Designed and documented recurring in-game events and seasonal content — including timed challenge events (such as Treasure Hunt and Ambulance Rush) and new themed clinic locations that expand the world (Paris, Prague, and Beijing clinics, among others). Specified event rules, objectives, reward structures, and pacing, and prepared clear design documentation for engineers and artists to implement each update on schedule.</p>
+            <p>Balanced level difficulty, progression pacing, and the in-game economy so new content slotted cleanly into the existing curve without breaking early-game onboarding or late-game challenge — tuning reward timing, soft-currency sinks, and event payouts to sustain engagement and support monetisation. Coordinated closely with programmers, artists, and QA across weekly update cycles, produced task breakdowns, reviewed implementations against design intent, and iterated from concept to shipped content and quality-of-life improvements to the core time-management loop.</p>
+          </div>
+          <div class="kw">
+            <span>Live Operations</span><span>Event Design</span><span>F2P Game Design</span><span>Economy Balancing</span><span>Progression Tuning</span><span>Content Updates</span><span>GDD Authoring</span><span>Unity</span><span>Cross-discipline Collaboration</span><span>Retention Design</span>
+          </div>
+          <div class="plates">
+            <figure class="plate"><img src="a1.jpg" alt="Happy Clinic screenshot 1"><figcaption><b>Fig. 2.4-A</b><span>Happy Clinic</span></figcaption></figure>
+            <figure class="plate"><img src="a2.jpg" alt="Happy Clinic screenshot 2"><figcaption><b>Fig. 2.4-B</b><span>Happy Clinic</span></figcaption></figure>
+            <figure class="plate"><img src="a3.jpg" alt="Happy Clinic screenshot 3"><figcaption><b>Fig. 2.4-C</b><span>Happy Clinic</span></figcaption></figure>
+          </div>
+        </div>
+      </article>
+
+    </div>
   </div>
-
-  <!-- 2.1 KOLIBRI -->
-  <article class="entry" id="e-kolibri">
-    <div class="entry-head">
-      <span class="entry-no">2.1</span>
-      <h3>Kolibri Games</h3>
-      <span class="entry-flag">← latest!</span>
-    </div>
-    <table class="entry-spec">
-      <tr><td>Role</td><td>Game Designer</td><td>Period</td><td>12/2025 – 06/2026</td></tr>
-      <tr><td>Type</td><td>Mobile Game Development</td><td>Setup</td><td>Remote</td></tr>
-    </table>
-    <div class="body-copy">
-      <p>Joined Kolibri Games as a Game Designer on <em>Idle Miner Tycoon: Gold Games</em> — a leading F2P idle simulation title with 250M+ downloads, built around a deep mining economy, seasonal live events, and weekly content updates. Worked fully remote as part of a distributed team operating in a high-velocity live-service environment.</p>
-      <p>Owned the design and balancing of the free-to-play game economy — including mine progression systems, Super Manager ability sets, seasonal reward structures, and in-game currency sinks. Monitored core KPIs each season and iterated based on live player data to sustain engagement and monetisation performance across the scaled player base.</p>
-      <p>Planned and executed live operations content cycles — coordinating weekly event mines, seasonal themed events, and limited-time Super Manager releases. Designed and documented A/B experiments to test economy and progression hypotheses, tracking metrics and translating findings into actionable balance changes across weekly update cycles.</p>
-    </div>
-    <div class="kw"><b>Keywords:</b>
-      <span>F2P Game Design</span><span>Game Economy</span><span>Live Operations</span><span>Data-Driven Optimization</span><span>Experiment Design</span><span>Unity</span><span>LDD Authoring</span><span>Remote Collaboration</span><span>Retention Design</span>
-    </div>
-    <div class="plates">
-      <figure><img src="D1.jpg" alt="Idle Miner Tycoon screenshot 1"><figcaption><b>Fig. 2.1-A</b><span>Idle Miner Tycoon</span></figcaption></figure>
-      <figure><img src="D2.jpg" alt="Idle Miner Tycoon screenshot 2"><figcaption><b>Fig. 2.1-B</b><span>Idle Miner Tycoon</span></figcaption></figure>
-      <figure><img src="D3.jpg" alt="Idle Miner Tycoon screenshot 3"><figcaption><b>Fig. 2.1-C</b><span>Idle Miner Tycoon</span></figcaption></figure>
-    </div>
-  </article>
-
-  <!-- 2.2 ALICTUS -->
-  <article class="entry" id="e-alictus">
-    <div class="entry-head">
-      <span class="entry-no">2.2</span>
-      <h3>Alictus</h3>
-    </div>
-    <table class="entry-spec">
-      <tr><td>Role</td><td>Game Designer</td><td>Period</td><td>02/2025 – 11/2025</td></tr>
-      <tr><td>Type</td><td>Mobile Level Development</td><td>Focus</td><td>Hyper-casual</td></tr>
-    </table>
-    <div class="body-copy">
-      <p>Joined Alictus as a Game Designer focused on hyper-casual mobile level development — a fast-paced environment requiring high-volume concept output and rapid design validation. Ideated, scoped, and prototyped new gameplay concepts in Unity, moving from rough mechanic ideas to testable builds within tight iteration cycles.</p>
-      <p>Designed and balanced level progressions with a strong emphasis on player retention — analysing early-session drop-off points, adjusting difficulty curves, and tuning reward timing to improve engagement metrics. Applied data-informed design thinking to refine core loops and reduce friction at critical onboarding stages.</p>
-      <p>Contributed to improving overall gameplay clarity and mechanic legibility, ensuring new players could understand and engage with core systems intuitively without onboarding text. Worked collaboratively within a structured pipeline to bring multiple concurrent concepts from prototype to a publishable state.</p>
-    </div>
-    <div class="kw"><b>Keywords:</b>
-      <span>Hyper-Casual Design</span><span>Gameplay Concepting</span><span>Unity Prototyping</span><span>Rapid Iteration</span><span>Retention Design</span><span>Difficulty Balancing</span><span>Core Loop Design</span>
-    </div>
-    <div class="plates">
-      <figure><img src="c1.jpg" alt="Alictus screenshot 1"><figcaption><b>Fig. 2.2-A</b><span>Alictus</span></figcaption></figure>
-      <figure><img src="c2.jpg" alt="Alictus screenshot 2"><figcaption><b>Fig. 2.2-B</b><span>Alictus</span></figcaption></figure>
-      <figure><img src="c3.jpg" alt="Alictus screenshot 3"><figcaption><b>Fig. 2.2-C</b><span>Alictus</span></figcaption></figure>
-    </div>
-  </article>
-
-  <!-- 2.3 HOMA GAMES -->
-  <article class="entry" id="e-homa">
-    <div class="entry-head">
-      <span class="entry-no">2.3</span>
-      <h3>Homa Games</h3>
-      <span class="entry-flag">← featured!</span>
-    </div>
-    <table class="entry-spec">
-      <tr><td>Role</td><td>Game Designer</td><td>Period</td><td>01/2023 – 11/2025</td></tr>
-      <tr><td>Type</td><td>Mobile Game Dev → Live-Ops</td><td>Setup</td><td>Remote</td></tr>
-    </table>
-    <div class="body-copy">
-      <p>Worked as a Game Designer at Homa Games on <em>All in Hole</em> — a hybrid-casual black-hole title that reworked the classic arcade "hole" loop into a deep, level-based progression game that went on to break into the global top-50 grossing charts. Contributed across the full lifecycle: first through the core development phase that turned a single-mechanic prototype into a structured, metagame-driven product, then through sustained live operations. Operated fully remote as part of a distributed international team.</p>
-      <p>During development, helped design and specify the systems that turned the arcade core into a retention-driven game — level-based progression, the lives/energy loop, booster mechanics (Magnet, Chrono, Lightning), and the Royal-Match-style events metagame layered on top of core gameplay. Authored detailed game design documentation defining system behaviour, progression pacing, reward logic, and trigger conditions, used directly by engineers and artists for implementation.</p>
-      <p>In the live-ops phase, owned the design and balancing of the free-to-play economy and seasonal content — including the Treasure Pass (battle pass) seasons, Team Battles, currency sinks, and the recurring themed level packs (100 new levels per release) that keep the content calendar full. Tuned difficulty curves, reward tracks, and upsell moments to protect both progression feel and monetisation across a large, active player base.</p>
-      <p>Designed and documented A/B experiments across regions — testing tutorial flow, difficulty ramps, event configurations, and offer timing — then translated live KPI and cohort data into concrete balance and design changes each update cycle. Worked in a fast, data-driven pipeline where every progression and economy decision was validated against real player behaviour.</p>
-    </div>
-    <div class="kw"><b>Keywords:</b>
-      <span>F2P Game Design</span><span>Game Economy</span><span>Battle Pass Design</span><span>Live Operations</span><span>Events Metagame</span><span>A/B Testing</span><span>Progression Balancing</span><span>GDD Authoring</span><span>Unity</span><span>Data-Driven Design</span><span>Remote Collaboration</span>
-    </div>
-    <div class="plates">
-      <figure><img src="b1.jpg" alt="All in Hole screenshot 1"><figcaption><b>Fig. 2.3-A</b><span>All in Hole</span></figcaption></figure>
-      <figure><img src="b2.jpg" alt="All in Hole screenshot 2"><figcaption><b>Fig. 2.3-B</b><span>All in Hole</span></figcaption></figure>
-      <figure><img src="b3.jpg" alt="All in Hole screenshot 3"><figcaption><b>Fig. 2.3-C</b><span>All in Hole</span></figcaption></figure>
-    </div>
-  </article>
-
-  <!-- 2.4 NORDCURRENT -->
-  <article class="entry" id="e-nordcurrent">
-    <div class="entry-head">
-      <span class="entry-no">2.4</span>
-      <h3>Nordcurrent</h3>
-    </div>
-    <table class="entry-spec">
-      <tr><td>Role</td><td>Game Designer</td><td>Period</td><td>05/2023 – 04/2024</td></tr>
-      <tr><td>Type</td><td>Mobile Live Operations</td><td>Focus</td><td>Events &amp; Balancing</td></tr>
-    </table>
-    <div class="body-copy">
-      <p>Worked as a Game Designer at Nordcurrent on <em>Happy Clinic</em> — a free-to-play time-management / hospital simulation game with a long-running live-service content calendar. Focused on the live-operations side of the title: keeping an established player base engaged through a steady stream of new content, events, and balance updates.</p>
-      <p>Designed and documented recurring in-game events and seasonal content — including timed challenge events (such as Treasure Hunt and Ambulance Rush) and new themed clinic locations that expand the world (Paris, Prague, and Beijing clinics, among others). Specified event rules, objectives, reward structures, and pacing, and prepared clear design documentation for engineers and artists to implement each update on schedule.</p>
-      <p>Balanced level difficulty, progression pacing, and the in-game economy so new content slotted cleanly into the existing curve without breaking early-game onboarding or late-game challenge — tuning reward timing, soft-currency sinks, and event payouts to sustain engagement and support monetisation. Coordinated closely with programmers, artists, and QA across weekly update cycles, produced task breakdowns, reviewed implementations against design intent, and iterated from concept to shipped content and quality-of-life improvements to the core time-management loop.</p>
-    </div>
-    <div class="kw"><b>Keywords:</b>
-      <span>Live Operations</span><span>Event Design</span><span>F2P Game Design</span><span>Economy Balancing</span><span>Progression Tuning</span><span>Content Updates</span><span>GDD Authoring</span><span>Unity</span><span>Cross-discipline Collaboration</span><span>Retention Design</span>
-    </div>
-    <div class="plates">
-      <figure><img src="a1.jpg" alt="Happy Clinic screenshot 1"><figcaption><b>Fig. 2.4-A</b><span>Happy Clinic</span></figcaption></figure>
-      <figure><img src="a2.jpg" alt="Happy Clinic screenshot 2"><figcaption><b>Fig. 2.4-B</b><span>Happy Clinic</span></figcaption></figure>
-      <figure><img src="a3.jpg" alt="Happy Clinic screenshot 3"><figcaption><b>Fig. 2.4-C</b><span>Happy Clinic</span></figcaption></figure>
-    </div>
-  </article>
-
-  <div class="sheet-foot"><span>Section 2.0 · Production History</span><span>Page 03 / 06</span></div>
 </section>
 
-<!-- ════ SHEET 4 · CAPABILITIES ════ -->
-<section class="sheet rv" id="capabilities">
-  <div class="sec-head">
-    <span class="sec-no">SECTION 3.0</span>
-    <h2 class="sec-title">Capabilities — Skills</h2>
-  </div>
+<!-- ════ 03 · SOLO PROJECT ════ -->
+<section class="solo" id="solo">
+  <div class="wrap">
+    <div class="s-head rv">
+      <span class="s-idx">03</span>
+      <h2 class="s-title">Solo <span class="thin">project</span></h2>
+      <span class="s-kicker">Designed, built &amp; shipped alone</span>
+    </div>
 
-  <div class="spec-grid">
-    <div class="spec-cell">
-      <h4>3.1 Design</h4>
-      <ul>
-        <li class="ok">Game Design</li>
-        <li class="ok">F2P Economy Design</li>
-        <li class="ok">Battle Pass &amp; Events</li>
-        <li class="ok">Level Design</li>
-        <li class="ok">Progression &amp; Pacing</li>
-        <li class="ok">Player Flow</li>
-      </ul>
-    </div>
-    <div class="spec-cell">
-      <h4>3.2 Production</h4>
-      <ul>
-        <li class="ok">Game Design Documentation</li>
-        <li class="ok">Live Operations</li>
-        <li class="ok">A/B Testing &amp; Analytics</li>
-        <li class="ok">Task Preparation</li>
-        <li class="ok">Iteration Workflow</li>
-        <li class="ok">Cross-discipline Handoff</li>
-      </ul>
-    </div>
-    <div class="spec-cell">
-      <h4>3.3 Tools</h4>
-      <ul>
-        <li class="ok">Unity Engine</li>
-        <li class="ok">Unreal Engine</li>
-        <li class="ok">C#</li>
-        <li class="ok">C++</li>
-        <li class="ok">Blueprints (UE)</li>
-        <li class="ok">Jira / Confluence</li>
-      </ul>
-    </div>
-    <div class="spec-cell">
-      <h4>3.4 Languages</h4>
-      <ul>
-        <li class="ok">English</li>
-        <li class="ok">Russian</li>
-        <li class="ok">Azerbaijani</li>
-        <li class="ok">Turkish</li>
-      </ul>
+    <div class="solo-body rv">
+      <div class="work-head">
+        <h3>Nullwake</h3>
+        <span class="work-tag">Solo · Steam</span>
+      </div>
+
+      <dl class="meta">
+        <div><dt>Role</dt><dd>Solo Developer &amp; Designer</dd></div>
+        <div><dt>Released</dt><dd>Oct 2025 · Steam</dd></div>
+        <div><dt>Genre</dt><dd>Psychological Horror</dd></div>
+        <div><dt>Reception</dt><dd>Mostly Positive</dd></div>
+      </dl>
+
+      <div class="work-body">
+        <p class="lead">A first-person psychological horror game about isolation and the slow erosion of reality — designed, built, and shipped to Steam entirely on my own.</p>
+        <p>Nullwake trades jump-scare spectacle for sustained dread: an abandoned hospital that stops behaving the way it should, corridors that run too long, and a town where reality quietly overlaps with something else. I built the experience around <strong>atmosphere over action</strong> — using pacing, space, silence, and environmental storytelling to hold tension, and letting the player notice what shouldn't be there instead of spelling it out.</p>
+        <p>As the only person on the project, I carried it across every stage — level and space design, encounter and pacing logic, environmental narrative, and the build and Steam release itself. It's the clearest demonstration of how I think about a <em>whole game</em>, not just a system inside one.</p>
+      </div>
+
+      <div class="kw">
+        <span>Level Design</span><span>Environmental Storytelling</span><span>Atmosphere &amp; Pacing</span><span>First-Person 3D</span><span>Encounter Design</span><span>Scope Management</span><span>Solo Development</span><span>Steam Release</span>
+      </div>
+
+      <div class="solo-gallery">
+        <figure class="plate big"><img src="x1.jpg" alt="Nullwake screenshot 1"><figcaption><b>Fig. 3.0-A</b><span>Nullwake</span></figcaption></figure>
+        <figure class="plate"><img src="x2.jpg" alt="Nullwake screenshot 2"><figcaption><b>Fig. 3.0-B</b><span>Nullwake</span></figcaption></figure>
+        <figure class="plate"><img src="x3.jpg" alt="Nullwake screenshot 3"><figcaption><b>Fig. 3.0-C</b><span>Nullwake</span></figcaption></figure>
+      </div>
+
+      <div class="solo-cta">
+        <a href="https://store.steampowered.com/app/4073560/Nullwake/" target="_blank" rel="noopener" class="btn btn-fill">View on Steam ↗</a>
+      </div>
     </div>
   </div>
-
-  <div class="sheet-foot"><span>Section 3.0 · Capabilities</span><span>Page 04 / 06</span></div>
 </section>
 
-<!-- ════ SHEET 5 · EDUCATION ════ -->
-<section class="sheet rv" id="education">
-  <div class="sec-head">
-    <span class="sec-no">SECTION 4.0</span>
-    <h2 class="sec-title">Education</h2>
-  </div>
-  <div class="edu-row">
-    <div>
-      <h3>Bachelor of Science in Computer Science</h3>
-      <div class="sch">University of Debrecen · Debrecen, Hungary</div>
+<!-- ════ 04 · CAPABILITIES ════ -->
+<section class="band" id="capabilities" style="padding-top:0">
+  <div class="wrap rv">
+    <div class="s-head">
+      <span class="s-idx">04</span>
+      <h2 class="s-title">Capabilities</h2>
+      <span class="s-kicker">What I bring to a team</span>
     </div>
-    <div class="seal">BSc<br>Comp<br>Sci</div>
+    <div class="caps">
+      <section class="cap">
+        <h4><i>4.1</i> Design</h4>
+        <ul>
+          <li>Game Design</li>
+          <li>F2P Economy Design</li>
+          <li>Battle Pass &amp; Events</li>
+          <li>Level Design</li>
+          <li>Progression &amp; Pacing</li>
+          <li>Player Flow</li>
+        </ul>
+      </section>
+      <section class="cap">
+        <h4><i>4.2</i> Production</h4>
+        <ul>
+          <li>Game Design Documentation</li>
+          <li>Live Operations</li>
+          <li>A/B Testing &amp; Analytics</li>
+          <li>Task Preparation</li>
+          <li>Iteration Workflow</li>
+          <li>Cross-discipline Handoff</li>
+        </ul>
+      </section>
+      <section class="cap">
+        <h4><i>4.3</i> Tools</h4>
+        <ul>
+          <li>Unity Engine</li>
+          <li>Unreal Engine</li>
+          <li>C#</li>
+          <li>C++</li>
+          <li>Blueprints (UE)</li>
+          <li>Jira / Confluence</li>
+        </ul>
+      </section>
+      <section class="cap">
+        <h4><i>4.4</i> Languages</h4>
+        <ul>
+          <li>English</li>
+          <li>Russian</li>
+          <li>Azerbaijani</li>
+          <li>Turkish</li>
+        </ul>
+      </section>
+    </div>
   </div>
-  <div class="sheet-foot"><span>Section 4.0 · Education</span><span>Page 05 / 06</span></div>
 </section>
 
-<!-- ════ SHEET 6 · APPENDIX A — CONTACT ════ -->
-<section class="sheet rv" id="appendix">
-  <div class="sec-head">
-    <span class="sec-no">APPENDIX A</span>
-    <h2 class="sec-title">Contact</h2>
+<!-- ════ 04 · EDUCATION ════ -->
+<section class="band" id="education" style="padding-top:0">
+  <div class="wrap rv">
+    <div class="s-head">
+      <span class="s-idx">05</span>
+      <h2 class="s-title">Education</h2>
+    </div>
+    <div class="edu-wrap">
+      <div class="edu">
+        <div>
+          <h3>Bachelor of Science in Computer Science</h3>
+          <div class="sch">University of Debrecen · Debrecen, Hungary</div>
+        </div>
+        <div class="yr">BSc</div>
+      </div>
+    </div>
   </div>
-
-  <div class="contact-wrap">
-    <div class="stamp">Approved · Open to Work</div>
-    <table class="contact-table">
-      <tr><td>Email</td><td><a href="mailto:epik11666@gmail.com">epik11666@gmail.com</a> &nbsp;<span class="pen" style="font-size:19px">← fastest route</span></td></tr>
-      <tr><td>Phone</td><td><a href="tel:+994505017931">+994 050 501 79 31</a></td></tr>
-      <tr><td>LinkedIn</td><td><a href="https://www.linkedin.com/in/adalat-samadov-b418a03a4" target="_blank" rel="noopener">adalat-samadov-b418a03a4</a></td></tr>
-      <tr><td>Location</td><td>Debrecen, Hungary</td></tr>
-    </table>
-  </div>
-
-  <div class="sign-off">
-    <div class="sign-line"><span class="pen">Adalat Samadov</span>Author · Game Designer · Level Designer</div>
-    <div class="sign-line">© 2026 · End of document</div>
-  </div>
-
-  <div class="sheet-foot"><span>Appendix A · Contact</span><span>Page 06 / 06</span></div>
 </section>
 
-</main>
+<!-- ════ CONTACT ════ -->
+<footer class="foot" id="contact">
+  <div class="wrap">
+    <span class="eyebrow">Appendix A — Contact</span>
+    <h2>Let's build<br><span class="thin">something.</span></h2>
+    <dl class="contact">
+      <div><dt>Email</dt><dd><a href="mailto:epik11666@gmail.com">epik11666@gmail.com</a></dd></div>
+      <div><dt>Phone</dt><dd><a href="tel:+994505017931">+994 050 501 79 31</a></dd></div>
+      <div><dt>LinkedIn</dt><dd><a href="https://www.linkedin.com/in/adalat-samadov-b418a03a4" target="_blank" rel="noopener">adalat-samadov ↗</a></dd></div>
+      <div><dt>Location</dt><dd>Debrecen, Hungary</dd></div>
+    </dl>
+    <div class="sign">
+      <span><b>Adalat Samadov</b> — Game Designer · Level Designer</span>
+      <span>© 2026 · Available for work</span>
+    </div>
+  </div>
+</footer>
 
 <script>
-// Scroll reveal for sheets
-const obs = new IntersectionObserver(entries => {
-  entries.forEach(e => {
-    if (e.isIntersecting) { e.target.classList.add('in'); obs.unobserve(e.target); }
-  });
-}, { threshold: 0.06 });
-document.querySelectorAll('.rv').forEach(el => obs.observe(el));
+// scroll progress (tuning slider) + bar solidify
+const fill=document.getElementById('sliderfill');
+const bar=document.getElementById('bar');
+const hero=document.getElementById('top');
+function onScroll(){
+  const h=document.documentElement;
+  const p=h.scrollTop/(h.scrollHeight-h.clientHeight||1);
+  fill.style.transform='scaleX('+Math.min(1,Math.max(0,p))+')';
+  const heroBottom=hero.offsetHeight-70;
+  bar.classList.toggle('solid',h.scrollTop>heroBottom);
+}
+document.addEventListener('scroll',onScroll,{passive:true});onScroll();
 
-// Highlight current section in the table of contents
-const tocLinks = Array.from(document.querySelectorAll('.toc a'));
-const targets = tocLinks.map(a => document.querySelector(a.getAttribute('href')));
-const spy = new IntersectionObserver(entries => {
-  entries.forEach(e => {
-    if (e.isIntersecting) {
-      const i = targets.indexOf(e.target);
-      tocLinks.forEach((l, j) => l.classList.toggle('now', i === j));
-    }
-  });
-}, { rootMargin: '-30% 0px -55% 0px' });
-targets.forEach(t => t && spy.observe(t));
+// reveal on scroll
+const io=new IntersectionObserver((es)=>{
+  es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}});
+},{threshold:.08});
+document.querySelectorAll('.rv').forEach(el=>io.observe(el));
+
+// active nav
+const links=[...document.querySelectorAll('.bar nav a')];
+const map=links.map(a=>document.querySelector(a.getAttribute('href')));
+const spy=new IntersectionObserver((es)=>{
+  es.forEach(e=>{if(e.isIntersecting){const i=map.indexOf(e.target);links.forEach((l,j)=>l.classList.toggle('now',i===j));}});
+},{rootMargin:'-40% 0px -55% 0px'});
+map.forEach(t=>t&&spy.observe(t));
 </script>
 </body>
 </html>
